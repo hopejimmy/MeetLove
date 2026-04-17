@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Relate / 同频 🪐
 
-## Getting Started
+Relate (同频) is an AI-driven relational coach application leveraging MBTI cognitive functions and Nonviolent Communication (NVC) frameworks. It provides personalized, deep psychological insights to help you navigate your interpersonal relationships with family, partners, friends, and colleagues.
 
-First, run the development server:
+![Relate App Logo](./public/logo.png)
 
+## Features 🚀
+- **Personality Profiling (Observer Profiling):** Rapid 4-question behavioral profiling engine to easily deduce anyone's MBTI based on their day-to-day actions.
+- **Dynamic Scenario AI Engine:** Powered by **Google Gemini 2.5 Flash**, it dynamically generates conflict-resolution and advice scenarios tailored specifically to the collision of *your* personality and *their* personality.
+- **Glassmorphism UI:** A sleek, premium, highly interactive frontend aesthetic utilizing custom CSS modules and aesthetic tokens.
+- **i18n Support:** First-class multi-language toggling for a seamless English (Relate) and Chinese (同频) experience.
+- **Soft-Login System:** A frictionless entry utilizing local storage and an email-based identity retrieval system without the heavy lift of passwords during the MVP phase.
+
+## Tech Stack 🛠️
+- **Frontend:** Next.js (App Router), React, CSS Modules
+- **Backend/API:** Next.js Serverless API Routes
+- **Database:** SQLite paired with Prisma ORM
+- **AI Core:** `@google/genai` (Gemini SDK)
+
+## Getting Started 💻
+
+### 1. Installation
+Clone the repository and install the initial dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/hopejimmy/MeetLove.git
+cd MeetLove
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment Variables
+You will need a Google Gemini API Key for the AI core engine to output dynamic advice.
+Create a `.env.local` file in the root directory:
+```env
+GEMINI_API_KEY="your_google_gemini_api_key_here"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Database Initialization
+This application uses a local SQLite database (`dev.db`). It automatically provisions its schema definitions upon Prisma setup. Ensure Prisma is actively synchronized:
+```bash
+npx prisma db push
+# If you want to view the database visually:
+npx prisma studio
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+Navigate to [http://localhost:3000](http://localhost:3000) to view the application. 
 
-## Learn More
+## Roadmap & MVP Status 🗺️
+Phase 1 & 2 have been successfully developed for MVP:
+- ✅ **M1:** Core infrastructure, Prisma Schema, Glassmorphism UI tokens.
+- ✅ **M2:** i18n engine, Soft Login (`/login`), Relative Adding (`/dashboard/add-relative`), Interactive Onboarding Quiz.
+- ✅ **M3:** Google Gemini SDK integration, dynamic real-time communication advice with character context logic.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built with ❤️ and psychological resonance.*
