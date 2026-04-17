@@ -1,0 +1,148 @@
+.formContainer {
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.backButton {
+  margin-top: 2rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.backButton:hover {
+  color: var(--accent-color);
+}
+
+/* MBTI Grid */
+.mbtiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+.mbtiCard {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--card-border);
+  padding: 1rem;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.mbtiCard:hover {
+  background: var(--card-bg);
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+@media (max-width: 480px) {
+  .mbtiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Quiz Specifics */
+.progressCounter {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--accent-color);
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.questionText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+  min-height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.optionCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 1.5rem 1rem;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.optionCard:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--gradient-1);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Loader */
+.loader {
+  border: 3px solid rgba(139, 92, 246, 0.2);
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
