@@ -74,6 +74,10 @@ export async function POST(req: NextRequest) {
         if (response) {
           advice = response.text || "大脑短路了，无法生成建议，请重试。";
         }
+      } catch (e) {
+        console.error("Gemini API Init Error:", e);
+        advice = "Gemini AI 引擎初始化失败。请检查密钥是否正确。";
+      }
     } else {
       advice = "⚠️ 哎呀！系统检测到尚未配置 GEMINI_API_KEY 环境变量，因此真正的 AI 引擎未能顺利启动。\n\n请在你的项目根目录下的 `.env.local` 文件里写入 GEMINI_API_KEY=你的密钥，然后重启程序，就能立刻获取属于你们之间的灵魂共振指南了！";
     }
