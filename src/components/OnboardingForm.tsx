@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLang } from "@/context/LanguageContext";
+import { useDialog } from "@/context/DialogContext";
 import { RsOrb, RsStar, RsMedal, RsPetal } from "@/components/icons/ResonanceIcons";
 import styles from "./OnboardingForm.module.css";
 import { generateQuiz, calculateMbtiScore, QuestionDef } from "@/lib/questionBank";
@@ -16,10 +17,11 @@ const MBTI_TYPES = [
 export default function OnboardingForm() {
   const router = useRouter();
   const { t, lang } = useLang();
-  const [step, setStep] = useState<"hero" | "select" | "quiz" | "completing">("hero");
+  const { showConfirm } = useDialog();
+  const [step, setStep] = useState<"hero" | "select" | "length_select" | "quiz" | "completing">("hero");
   
-  // 基础首页免费题库 (8题)
-  const [quizQuestions] = useState<QuestionDef[]>(() => generateQuiz(8));
+  // 动态题库
+  const [quizQuestions, setQuizQuestions] = useState<QuestionDef[]>([]);
   
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
@@ -49,6 +51,19 @@ export default function OnboardingForm() {
     setSelectedMbti(type);
     setStep("completing");
     saveMbtiAndRedirect(type);
+  };
+
+  const startQuiz = async (length: 8 | 16 | 32 | 64) => {
+    if (length > 8) {
+      const proceed = await showConfirm(
+        "👑 解锁高阶深度分析模型。\n\n由于你目前处于游客状态，建议体验基础版。不过作为演示特权，你可以破例直接体验这套深潜量表。\n\n是否继续？"
+      );
+      if (!proceed) return;
+    }
+    setQuizQuestions(generateQuiz(length));
+    setQuizIndex(0);
+    setQuizAnswers([]);
+    setStep("quiz");
   };
 
   const handleQuizAnswer = (typeResult: string) => {
@@ -84,7 +99,7 @@ export default function OnboardingForm() {
             {t.heroSubtitle}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <button className="rs-btn" onClick={() => setStep("quiz")}>
+            <button className="rs-btn" onClick={() => setStep("length_select")}>
               {t.beginTest}
             </button>
             <button className="rs-btn ghost" onClick={() => setStep("select")}>
@@ -130,9 +145,41 @@ export default function OnboardingForm() {
         </div>
         
         <div style={{ textAlign:'center', marginTop: 30 }}>
-          <button style={{ background: 'none', border:'none', fontSize: 13, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink-soft)', textDecoration:'underline', cursor:'pointer' }} onClick={() => setStep("quiz")}>
-            不知道？做一次测试
+          <button style={{ background: 'none', border:'none', fontSize: 13, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink-soft)', textDecoration:'underline', cursor:'pointer' }} onClick={() => setStep("length_select")}>
+            不知道？要做一次测试
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  // 2.5. Length Select State
+  if (step === "length_select") {
+    return (
+      <div className="animate-fade-in" style={{ padding: '14px 18px', maxWidth: 500, margin: '0 auto', position: 'relative', zIndex: 10 }}>
+        <button onClick={() => setStep("hero")} style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }}>← 返回</button>
+        <div className="rs-card" style={{ padding: 22 }}>
+          <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>选择推演深度</h2>
+          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 24px', fontFamily:'"Nunito",sans-serif' }}>更丰富的采样将极大地提高底层大模型抓取准确度的上限。</p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <button className="rs-btn" onClick={() => startQuiz(8)} style={{ padding: '14px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>基础快速侧写 (8题)</span>
+              <span style={{ fontSize: 11, background: 'var(--rs-honey)', color: 'var(--rs-ink)', padding: '2px 6px', borderRadius: 6 }}>免费</span>
+            </button>
+            <button className="rs-btn ghost" onClick={() => startQuiz(16)} style={{ padding: '14px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>高阶精准侧写 (16题)</span>
+              <span style={{ fontSize: 11, background: 'var(--rs-cream)', border: '1px solid var(--rs-ink)', color: 'var(--rs-ink)', padding: '2px 6px', borderRadius: 6 }}>👑 PRO</span>
+            </button>
+            <button className="rs-btn ghost" onClick={() => startQuiz(32)} style={{ padding: '14px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>深度潜意识探测 (32题)</span>
+              <span style={{ fontSize: 11, background: 'var(--rs-cream)', border: '1px solid var(--rs-ink)', color: 'var(--rs-ink)', padding: '2px 6px', borderRadius: 6 }}>👑 PRO</span>
+            </button>
+            <button className="rs-btn ghost" onClick={() => startQuiz(64)} style={{ padding: '14px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>终极灵魂解码 (64题)</span>
+              <span style={{ fontSize: 11, background: 'var(--rs-cream)', border: '1px solid var(--rs-ink)', color: 'var(--rs-ink)', padding: '2px 6px', borderRadius: 6 }}>👑 PRO</span>
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -145,7 +192,7 @@ export default function OnboardingForm() {
       <div className="animate-fade-in" style={{ padding: '16px 18px', maxWidth: 500, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <button onClick={() => {
-            if(quizIndex === 0) setStep("hero");
+            if(quizIndex === 0) setStep("length_select");
             else { setQuizIndex(prev => prev - 1); setQuizAnswers(prev => prev.slice(0, -1)); }
           }} style={{ background: 'none', border:'none', fontSize:12, fontWeight: 800, color:'var(--rs-ink)', cursor:'pointer', fontFamily:'"Nunito",sans-serif', padding:0 }}>← 返回</button>
           
