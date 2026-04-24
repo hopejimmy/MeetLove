@@ -21,7 +21,26 @@ export default function Navbar() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, [pathname]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const userId = localStorage.getItem("meetlove_userId");
+    
+    // Safety check for guests before nuking their local session
+    if (userId) {
+      try {
+        const res = await fetch(`/api/user?id=${userId}`);
+        const data = await res.json();
+        
+        if (data.success && !data.user.email) {
+          const proceed = window.confirm(
+            "⚠️ 警告：你目前仍是未绑定的【游客状态】！\n\n若此时退出，你将永远丢失这台设备上辛苦建立的亲友档案。\n\n你确定要抛弃这些数据并立刻退出吗？"
+          );
+          if (!proceed) return;
+        }
+      } catch (e) {
+        console.error("Failed to verify guest status before logout", e);
+      }
+    }
+
     localStorage.removeItem("meetlove_userId");
     localStorage.removeItem("meetlove_mbti");
     setIsLogged(false);
