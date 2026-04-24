@@ -13,6 +13,11 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [relationships, setRelationships] = useState<any[]>([]);
 
+  // Progressive Profiling bindings
+  const [isGuest, setIsGuest] = useState(false);
+  const [emailToBind, setEmailToBind] = useState("");
+  const [binding, setBinding] = useState(false);
+
   useEffect(() => {
     const savedMbti = localStorage.getItem("meetlove_mbti");
     const userId = localStorage.getItem("meetlove_userId");
@@ -22,17 +27,22 @@ export default function Dashboard() {
     } else {
       setMbti(savedMbti);
       
-      // Fetch relationships
+      // Fetch user profile and relationships
       if (userId) {
-        fetch(`/api/relationships?userId=${userId}`)
-          .then(res => res.json())
-          .then(data => {
-            if(data.success) {
-              setRelationships(data.relationships);
-            }
-          })
-          .catch(e => console.error(e))
-          .finally(() => setLoading(false));
+        Promise.all([
+          fetch(`/api/relationships?userId=${userId}`).then(res => res.json()),
+          fetch(`/api/user?id=${userId}`).then(res => res.json())
+        ])
+        .then(([relData, userData]) => {
+          if (relData.success) {
+            setRelationships(relData.relationships);
+          }
+          if (userData.success && !userData.user.email) {
+            setIsGuest(true);
+          }
+        })
+        .catch(e => console.error(e))
+        .finally(() => setLoading(false));
       } else {
         setLoading(false);
       }
@@ -47,8 +57,62 @@ export default function Dashboard() {
     );
   }
 
+  const handleBindEmail = async () => {
+    if(!emailToBind.includes("@")) return alert("请输入有效的邮箱地址");
+    setBinding(true);
+    try {
+      const res = await fetch("/api/user", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: localStorage.getItem("meetlove_userId"), email: emailToBind })
+      });
+      const data = await res.json();
+      if(data.success) {
+        setIsGuest(false);
+        alert("绑定成功！你的星系档案已永久保存。");
+      } else {
+        alert(data.error || "绑定失败");
+      }
+    } catch(e) {
+      alert("网络错误");
+    } finally {
+      setBinding(false);
+    }
+  };
+
   return (
     <main className="animate-fade-in" style={{ padding: '16px 18px', maxWidth: '600px', margin: '0 auto' }}>
+      
+      {isGuest && (
+        <div className="rs-card" style={{ padding: '16px', marginBottom: 24, background: 'var(--rs-honey)', borderColor: 'var(--rs-ink)', animation: 'bob 3s ease-in-out infinite' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+            <div style={{ fontSize: 24 }}>⚠️</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 13, color: 'var(--rs-ink)', marginBottom: 2 }}>你的档案处于游客状态！</div>
+              <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 11, color: 'var(--rs-ink-soft)', marginBottom: 12 }}>为了防止换手机后遗失这些辛辛苦苦建立的亲友档案，请立刻绑定一个邮箱以作同步凭证：</div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input 
+                  type="email" 
+                  placeholder="name@example.com"
+                  value={emailToBind}
+                  onChange={(e) => setEmailToBind(e.target.value)}
+                  style={{
+                    flex: 1, padding: '8px 12px', fontSize: 12, border: '2px solid var(--rs-ink)', borderRadius: 8, outline: 'none', fontFamily:'"Nunito",sans-serif'
+                  }}
+                />
+                <button 
+                  className="rs-btn" 
+                  disabled={binding}
+                  onClick={handleBindEmail}
+                  style={{ padding: '8px 16px', fontSize: 13 }}
+                >
+                  {binding ? "..." : "绑定"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       <div className="rs-card" style={{ padding: 14, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 14 }}>
         <RsOrb size={54} color="lilac"/>
