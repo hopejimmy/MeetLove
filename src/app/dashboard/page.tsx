@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLang } from "@/context/LanguageContext";
 import { RsOrb, RsMedal } from "@/components/icons/ResonanceIcons";
 import { useDialog } from "@/context/DialogContext";
+import { MBTI_DATA } from "@/lib/mbtiData";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -137,11 +138,23 @@ export default function Dashboard() {
         </div>
       )}
       
-      <div className="rs-card" style={{ padding: 14, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 14 }}>
+      <div 
+        className="rs-card" 
+        onClick={() => {
+          if (mbti && MBTI_DATA[mbti]) {
+            showAlert(`【${mbti} - ${MBTI_DATA[mbti].role}】\n\n${MBTI_DATA[mbti].description}`);
+          }
+        }}
+        style={{ padding: 14, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
+      >
         <RsOrb size={54} color="lilac"/>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', fontWeight: 800, fontFamily:'"Nunito",sans-serif', letterSpacing:1, marginBottom: 2 }}>你的频率</div>
-          <div style={{ fontFamily:'"Fraunces",serif', fontSize: 24, fontStyle:'italic', fontWeight: 600, color: 'var(--rs-coral-dk)', letterSpacing: 0.5 }}>{mbti}</div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <div style={{ fontFamily:'"Fraunces",serif', fontSize: 24, fontStyle:'italic', fontWeight: 600, color: 'var(--rs-coral-dk)', letterSpacing: 0.5 }}>{mbti}</div>
+            {mbti && MBTI_DATA[mbti] && <div style={{ fontSize: 13, color: 'var(--rs-ink)', fontWeight: 800 }}>{MBTI_DATA[mbti].role}</div>}
+          </div>
+          {mbti && MBTI_DATA[mbti] && <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', marginTop: 2, fontFamily:'"Nunito",sans-serif' }}>{MBTI_DATA[mbti].short}</div>}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <RsMedal size={26} label="♡"/>
@@ -187,7 +200,24 @@ export default function Dashboard() {
                 </div>
                 <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 14, fontWeight: 900, textAlign: 'center', color: 'var(--rs-ink)', marginBottom: 2 }}>{rel.name}</div>
                 <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', textAlign: 'center', marginBottom: 10, fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>{rel.relationType}</div>
-                <div className="rs-chip">{rel.mbti || "未知"}</div>
+                <div 
+                  className="rs-chip" 
+                  onClick={(e) => {
+                    if (rel.mbti && MBTI_DATA[rel.mbti]) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      showAlert(`【${rel.mbti} - ${MBTI_DATA[rel.mbti].role}】\n\n${MBTI_DATA[rel.mbti].description}`);
+                    }
+                  }}
+                  style={{ cursor: rel.mbti && MBTI_DATA[rel.mbti] ? 'pointer' : 'default' }}
+                >
+                  {rel.mbti || "未知"}
+                </div>
+                {rel.mbti && MBTI_DATA[rel.mbti] && (
+                  <div style={{ fontSize: 10, color: 'var(--rs-ink-soft)', marginTop: 6, textAlign: 'center', fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>
+                    {MBTI_DATA[rel.mbti].role}
+                  </div>
+                )}
               </Link>
             );
           })}

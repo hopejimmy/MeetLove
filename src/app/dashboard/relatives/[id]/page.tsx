@@ -3,10 +3,13 @@
 import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { RsOrb } from "@/components/icons/ResonanceIcons";
+import { useDialog } from "@/context/DialogContext";
+import { MBTI_DATA } from "@/lib/mbtiData";
 
 export default function RelativeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const { id } = use(params);
+  const { showAlert } = useDialog();
   
   const [relative, setRelative] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -136,16 +139,78 @@ export default function RelativeDetailPage({ params }: { params: Promise<{ id: s
         ← 返回控制台
       </button>
 
-      <div className="rs-card" style={{ padding: 16, display: 'flex', gap: 14, alignItems: 'center', marginBottom: 20 }}>
+      <div 
+        className="rs-card" 
+        onClick={() => {
+          if (relative.mbti && MBTI_DATA[relative.mbti]) {
+            showAlert(`【${relative.mbti} - ${MBTI_DATA[relative.mbti].role}】\n\n${MBTI_DATA[relative.mbti].description}`);
+          }
+        }}
+        style={{ padding: 16, display: 'flex', gap: 14, alignItems: 'center', marginBottom: 20, cursor: relative.mbti && MBTI_DATA[relative.mbti] ? 'pointer' : 'default' }}
+      >
         <RsOrb size={52} color="mint" />
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 600, color: 'var(--rs-ink)' }}>{relative.name} 的频道</div>
-          <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', marginBottom: 8, fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>身份: {relative.relationType}</div>
-          <span className="rs-chip">{relative.mbti || "未知"}</span>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}>
+            <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 600, color: 'var(--rs-ink)' }}>{relative.name}</div>
+            <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>{relative.relationType}</div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span className="rs-chip">{relative.mbti || "未知"}</span>
+            {relative.mbti && MBTI_DATA[relative.mbti] && (
+              <span style={{ fontSize: 12, color: 'var(--rs-ink)', fontWeight: 800 }}>{MBTI_DATA[relative.mbti].role}</span>
+            )}
+          </div>
+          {relative.mbti && MBTI_DATA[relative.mbti] && (
+            <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', marginTop: 4, fontFamily:'"Nunito",sans-serif' }}>{MBTI_DATA[relative.mbti].short}</div>
+          )}
         </div>
       </div>
 
-      <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 900, marginBottom: 12, color:'var(--rs-ink-soft)', letterSpacing:1 }}>选择一个困境场景</div>
+      {relative.mbti && MBTI_DATA[relative.mbti] && (
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 900, marginBottom: 12, color:'var(--rs-ink-soft)', letterSpacing:1 }}>灵魂深层说明书</div>
+          
+          <div className="rs-card" style={{ padding: 18, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 16 }}>❤️</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>情感羁绊模式</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, paddingLeft: 24, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[relative.mbti].loveStyle}
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: 'var(--rs-cream)', margin: '0 8px' }} />
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 16 }}>🤜</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>友情相处模式</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, paddingLeft: 24, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[relative.mbti].friendStyle}
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: 'var(--rs-cream)', margin: '0 8px' }} />
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontSize: 16 }}>💣</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>绝对踩雷区</span>
+              </div>
+              <ul style={{ margin: 0, paddingLeft: 38, fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[relative.mbti].minefields.map((mine: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: 4 }}>{mine}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 900, marginBottom: 12, color:'var(--rs-ink-soft)', letterSpacing:1 }}>遇到困境怎么办？发给 AI 推演</div>
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
         {scenarios.map((s, i) => {
