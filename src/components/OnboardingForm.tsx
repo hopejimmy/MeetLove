@@ -162,14 +162,14 @@ export default function OnboardingForm() {
           <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>选择推演深度</h2>
           <div style={{ marginBottom: 24 }}>
             <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 12px', fontFamily:'"Nunito",sans-serif', lineHeight: 1.5 }}>
-              人类的心理绝非只言片语就能概括。基础版可快速提供定性区间，而 <strong>PRO 高阶量表</strong> 将解锁最高 64 题的高精密雷达。
+              只用 8 道题来断定一个人，总会觉得少点什么。如果你想真正看透一个人，我们需要做更深度的挖掘。
             </p>
             <div style={{ background: 'rgba(255,180,162, 0.15)', padding: '12px 14px', borderRadius: 10, border: '1px solid var(--rs-coral-dk)' }}>
-              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 4, letterSpacing: 0.5 }}>👑 PRO 核心特权</div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 4, letterSpacing: 0.5 }}>👑 PRO 专属解锁</div>
               <ul style={{ margin: 0, paddingLeft: 16, fontSize: 12, color: 'var(--rs-ink)', fontFamily:'"Nunito",sans-serif', lineHeight: 1.6 }}>
-                <li>深度刻画潜意识动机与依恋盲点</li>
-                <li>防平局微量加权算法，100% 精准锁定</li>
-                <li>解锁专属超长维度解析雷达图</li>
+                <li>读懂 TA 最真实的内心戏和性格软肋</li>
+                <li>拒绝模棱两可，100% 锁定真实匹配类型</li>
+                <li>获得超详细的「灵魂共振说明书」</li>
               </ul>
             </div>
           </div>
