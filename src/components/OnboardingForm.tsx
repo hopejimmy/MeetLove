@@ -209,7 +209,7 @@ export default function OnboardingForm() {
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-lilac)', border: '2px solid var(--rs-ink)' }}></div>
               <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 3: 查阅灵魂说明书</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
-                随时点开任意一张小卡片，即可快速获得与 TA 的「避雷生存指南」。
+                随时点开任意一张亲友小卡片，即可快速获得与 TA 的「避雷生存指南」。
               </div>
             </div>
 
