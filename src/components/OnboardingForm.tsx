@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useLang } from "@/context/LanguageContext";
 import { useDialog } from "@/context/DialogContext";
 import { RsOrb, RsStar, RsMedal, RsPetal } from "@/components/icons/ResonanceIcons";
@@ -166,6 +167,27 @@ export default function OnboardingForm() {
           >
             我已知道我的 MBTI 型
           </button>
+
+          <div style={{ textAlign: 'center', marginTop: 14 }}>
+            <Link
+              href="/mbti"
+              style={{
+                display: 'inline-block',
+                padding: '7px 16px',
+                border: '1.5px dashed var(--rs-ink)',
+                borderRadius: 30,
+                background: 'var(--rs-cream)',
+                fontSize: 12,
+                fontWeight: 700,
+                color: 'var(--rs-ink)',
+                textDecoration: 'none',
+                animation: 'bob 2.5s ease-in-out infinite',
+                fontFamily: '"Nunito", sans-serif',
+              }}
+            >
+              💡 第一次听说 MBTI？点这里了解 →
+            </Link>
+          </div>
         </div>
 
         {/* PAIN POINTS Section */}
