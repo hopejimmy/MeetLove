@@ -5,12 +5,14 @@ import { useLang } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { RsLogo } from "@/components/icons/ResonanceIcons";
+import { useDialog } from "@/context/DialogContext";
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang();
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { showConfirm } = useDialog();
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -31,7 +33,7 @@ export default function Navbar() {
         const data = await res.json();
         
         if (data.success && !data.user.email) {
-          const proceed = window.confirm(
+          const proceed = await showConfirm(
             "⚠️ 警告：你目前仍是未绑定的【游客状态】！\n\n若此时退出，你将永远丢失这台设备上辛苦建立的亲友档案。\n\n你确定要抛弃这些数据并立刻退出吗？"
           );
           if (!proceed) return;

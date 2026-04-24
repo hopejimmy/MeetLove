@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDialog } from "@/context/DialogContext";
 
 const MBTI_TYPES = [
   "INTJ", "INTP", "ENTJ", "ENTP",
@@ -12,6 +13,7 @@ const MBTI_TYPES = [
 
 export default function AddRelativePage() {
   const router = useRouter();
+  const { showAlert } = useDialog();
   
   const [step, setStep] = useState<"info" | "method" | "select" | "quiz" | "submitting">("info");
   
@@ -27,7 +29,7 @@ export default function AddRelativePage() {
     setStep("submitting");
     const userId = localStorage.getItem("meetlove_userId");
     if(!userId) {
-      alert("Missing User ID");
+      await showAlert("Missing User ID");
       return;
     }
 
@@ -45,11 +47,12 @@ export default function AddRelativePage() {
       if(res.ok) {
         router.push("/dashboard");
       } else {
-        alert("Ops, something went wrong.");
+        await showAlert("Ops, something went wrong.");
         setStep("info");
       }
     } catch(e) {
       console.error(e);
+      await showAlert("Network error");
       setStep("info");
     }
   };
@@ -130,8 +133,11 @@ export default function AddRelativePage() {
           <button 
             className="rs-btn" 
             style={{ width: '100%', marginBottom: 12, padding: '14px 0', fontSize: 15 }}
-            onClick={() => {
-              if(!name) return alert("请输入名字");
+            onClick={async () => {
+              if(!name) {
+                await showAlert("请输入名字");
+                return;
+              }
               setStep("method");
             }}
           >

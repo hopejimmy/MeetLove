@@ -4,17 +4,22 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLang } from "@/context/LanguageContext";
 import { RsLogo } from "@/components/icons/ResonanceIcons";
+import { useDialog } from "@/context/DialogContext";
 
 export default function LoginPage() {
   const router = useRouter();
   const { t } = useLang();
+  const { showAlert } = useDialog();
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    if(!email || !password) return alert("为了数据安全，请输入邮箱和密码！");
+    if(!email || !password) {
+      await showAlert("为了数据安全，请输入邮箱和密码！");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -30,11 +35,11 @@ export default function LoginPage() {
         if(data.mbti) localStorage.setItem("meetlove_mbti", data.mbti);
         router.push("/dashboard");
       } else {
-        alert(data.error || "登录失败");
+        await showAlert(data.error || "登录失败");
       }
     } catch(e) {
       console.error(e);
-      alert("网络波动，请重试");
+      await showAlert("网络波动，请重试");
     } finally {
       setLoading(false);
     }

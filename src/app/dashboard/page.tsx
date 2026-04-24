@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/context/LanguageContext";
 import { RsOrb, RsMedal } from "@/components/icons/ResonanceIcons";
+import { useDialog } from "@/context/DialogContext";
 
 export default function Dashboard() {
   const router = useRouter();
   const { t } = useLang();
+  const { showAlert } = useDialog();
   const [mbti, setMbti] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [relationships, setRelationships] = useState<any[]>([]);
@@ -59,8 +61,14 @@ export default function Dashboard() {
   }
 
   const handleBindEmail = async () => {
-    if(!emailToBind.includes("@")) return alert("请输入有效的邮箱地址");
-    if(passwordToBind.length < 6) return alert("密码至少需要 6 个字符");
+    if(!emailToBind.includes("@")) {
+      await showAlert("请输入有效的邮箱地址");
+      return;
+    }
+    if(passwordToBind.length < 6) {
+      await showAlert("密码至少需要 6 个字符");
+      return;
+    }
     setBinding(true);
     try {
       const res = await fetch("/api/user", {
@@ -75,12 +83,12 @@ export default function Dashboard() {
       const data = await res.json();
       if(data.success) {
         setIsGuest(false);
-        alert("绑定成功！你的星系档案已永久保存。");
+        await showAlert("绑定成功！你的星系档案已永久保存。");
       } else {
-        alert(data.error || "绑定失败");
+        await showAlert(data.error || "绑定失败");
       }
     } catch(e) {
-      alert("网络错误");
+      await showAlert("网络错误");
     } finally {
       setBinding(false);
     }
