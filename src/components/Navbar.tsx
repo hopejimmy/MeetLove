@@ -59,17 +59,19 @@ export default function Navbar() {
           {lang === 'zh' ? 'EN' : '中文'}
         </button>
 
-        {isLogged ? (
-          <button 
-            onClick={handleLogout}
-            style={{ background: 'transparent', border: 'none', color: 'var(--rs-ink-soft)', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}
-          >
-            {t.logout}
-          </button>
-        ) : (
-          <Link href="/login" style={{ textDecoration: 'none', color: 'var(--rs-ink-soft)', fontWeight: 700, fontSize: 11 }}>
-            {t.login}
-          </Link>
+        {pathname !== '/login' && (
+          isLogged ? (
+            <button 
+              onClick={handleLogout}
+              style={{ background: 'transparent', border: 'none', color: 'var(--rs-ink-soft)', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}
+            >
+              {t.logout}
+            </button>
+          ) : (
+            <Link href="/login" style={{ textDecoration: 'none', color: 'var(--rs-ink-soft)', fontWeight: 700, fontSize: 11 }}>
+              {t.login}
+            </Link>
+          )
         )}
       </div>
     </nav>
