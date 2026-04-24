@@ -162,14 +162,14 @@ export default function OnboardingForm() {
           <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>选择推演深度</h2>
           <div style={{ marginBottom: 24 }}>
             <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 12px', fontFamily:'"Nunito",sans-serif', lineHeight: 1.5 }}>
-              只用 8 道题来断定一个人，总会觉得少点什么。如果你想真正看透一个人，我们需要做更深度的挖掘。
+              免费版的 8 道题通常只能测出一个人的<strong>“社交面具”</strong>，且由于题量少，极易产生误判。想看到 TA 卸下防备后的真实模样吗？
             </p>
             <div style={{ background: 'rgba(255,180,162, 0.15)', padding: '12px 14px', borderRadius: 10, border: '1px solid var(--rs-coral-dk)' }}>
-              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 4, letterSpacing: 0.5 }}>👑 PRO 专属解锁</div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 4, letterSpacing: 0.5 }}>👑 升级 PRO 的决定性优势：</div>
               <ul style={{ margin: 0, paddingLeft: 16, fontSize: 12, color: 'var(--rs-ink)', fontFamily:'"Nunito",sans-serif', lineHeight: 1.6 }}>
-                <li>读懂 TA 最真实的内心戏和性格软肋</li>
-                <li>拒绝模棱两可，100% 锁定真实匹配类型</li>
-                <li>获得超详细的「灵魂共振说明书」</li>
+                <li><strong>击穿伪装：</strong>最高 64 个尖锐情境，直逼最底层的潜意识。</li>
+                <li><strong>告别平局：</strong>专业防平局算法，100% 锁定真实匹配类型。</li>
+                <li><strong>进阶档案：</strong>全面解锁情感雷达图与长达数页的软肋分析。</li>
               </ul>
             </div>
           </div>
