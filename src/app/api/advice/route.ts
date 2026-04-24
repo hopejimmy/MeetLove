@@ -43,15 +43,37 @@ export async function POST(req: NextRequest) {
 - 如果检测到用户的场景输入完全是不知所云的乱码，或与人际关系毫不相干，请温柔拒绝，并引导用户描述真实的感情困境。
 - 请直接输出上述三个结构板块，不需要前置的寒暄，去除不杂乱的 Markdown 符号，保持视觉清爽。`;
 
-        const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
-          contents: prompt,
-        });
-        advice = response.text || "大脑短路了，无法生成建议，请重试。";
-      } catch(e) {
-        console.error("Gemini API Error:", e);
-        advice = "Gemini AI 接口似乎由于网络波动或 Key 权限问题未能成功返回数据。请检查控制台报错。";
-      }
+        let response;
+        let retries = 3;
+        let delayMs = 1500;
+        
+        while (retries > 0) {
+          try {
+            response = await ai.models.generateContent({
+              model: 'gemini-2.5-flash',
+              contents: prompt,
+            });
+            break; // Success
+          } catch (e: any) {
+            retries--;
+            if (retries === 0) {
+              console.error("Gemini API Final Error:", e);
+              if (e?.status === 503 || e?.message?.includes('503')) {
+                advice = "当前时段连接共振星系的人数过多 (AI 服务器繁忙)，请稍后再尝试联络。";
+              } else {
+                advice = "Gemini AI 接口似乎由于网络波动或 Key 权限问题未能成功返回数据。请检查控制台报错。";
+              }
+            } else {
+              console.warn(`Gemini API 遭遇波动，准备在 ${delayMs}ms 后进行重试...剩余重试次数: ${retries}`);
+              await new Promise(resolve => setTimeout(resolve, delayMs));
+              delayMs *= 2; // Exponential backoff
+            }
+          }
+        }
+        
+        if (response) {
+          advice = response.text || "大脑短路了，无法生成建议，请重试。";
+        }
     } else {
       advice = "⚠️ 哎呀！系统检测到尚未配置 GEMINI_API_KEY 环境变量，因此真正的 AI 引擎未能顺利启动。\n\n请在你的项目根目录下的 `.env.local` 文件里写入 GEMINI_API_KEY=你的密钥，然后重启程序，就能立刻获取属于你们之间的灵魂共振指南了！";
     }
