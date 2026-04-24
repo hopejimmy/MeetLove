@@ -75,6 +75,11 @@ const REASONS = [
   },
 ];
 
+export const metadata = {
+  title: "MBTI 是什么 · Relate 共振",
+  description: "了解 MBTI 16 种人格类型，读懂自己和伴侣的相处密码。",
+};
+
 export default function MbtiPage() {
   return (
     <main style={{ maxWidth: 540, margin: "0 auto", padding: "16px 16px 60px" }}>
@@ -111,9 +116,9 @@ export default function MbtiPage() {
       {/* Section 2: 四个维度 */}
       <div style={{ marginBottom: 44 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 20 }}>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
           <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--rs-ink)", margin: 0 }}>MBTI 的 4 个维度</h2>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -156,9 +161,9 @@ export default function MbtiPage() {
       {/* Section 3: 16种类型 */}
       <div style={{ marginBottom: 44 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 20 }}>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
           <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--rs-ink)", margin: 0 }}>16 种人格类型</h2>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
@@ -184,11 +189,11 @@ export default function MbtiPage() {
       {/* Section 4: 为什么改善关系 */}
       <div style={{ marginBottom: 44 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 20 }}>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
           <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--rs-ink)", margin: 0, textAlign: "center" }}>
-            为什么了解人格，<br />能改善关系？
+            为什么了解人格，能改善关系？
           </h2>
-          <div style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
+          <div aria-hidden="true" style={{ height: 2, background: "var(--rs-ink)", width: 30 }} />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
