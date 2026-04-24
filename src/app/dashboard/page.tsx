@@ -16,6 +16,7 @@ export default function Dashboard() {
   // Progressive Profiling bindings
   const [isGuest, setIsGuest] = useState(false);
   const [emailToBind, setEmailToBind] = useState("");
+  const [passwordToBind, setPasswordToBind] = useState("");
   const [binding, setBinding] = useState(false);
 
   useEffect(() => {
@@ -59,12 +60,17 @@ export default function Dashboard() {
 
   const handleBindEmail = async () => {
     if(!emailToBind.includes("@")) return alert("请输入有效的邮箱地址");
+    if(passwordToBind.length < 6) return alert("密码至少需要 6 个字符");
     setBinding(true);
     try {
       const res = await fetch("/api/user", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: localStorage.getItem("meetlove_userId"), email: emailToBind })
+        body: JSON.stringify({ 
+          userId: localStorage.getItem("meetlove_userId"), 
+          email: emailToBind,
+          password: passwordToBind
+        })
       });
       const data = await res.json();
       if(data.success) {
@@ -89,24 +95,33 @@ export default function Dashboard() {
             <div style={{ fontSize: 24 }}>⚠️</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 13, color: 'var(--rs-ink)', marginBottom: 2 }}>你的档案处于游客状态！</div>
-              <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 11, color: 'var(--rs-ink-soft)', marginBottom: 12 }}>为了防止换手机后遗失这些辛辛苦苦建立的亲友档案，请立刻绑定一个邮箱以作同步凭证：</div>
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 11, color: 'var(--rs-ink-soft)', marginBottom: 12 }}>为了防止换手机后遗失这些辛辛苦苦建立的亲友档案，请立刻绑定邮箱及密码以作同步凭证：</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <input 
                   type="email" 
                   placeholder="name@example.com"
                   value={emailToBind}
                   onChange={(e) => setEmailToBind(e.target.value)}
                   style={{
-                    flex: 1, padding: '8px 12px', fontSize: 12, border: '2px solid var(--rs-ink)', borderRadius: 8, outline: 'none', fontFamily:'"Nunito",sans-serif'
+                    width: '100%', padding: '8px 12px', boxSizing: 'border-box', fontSize: 12, border: '2px solid var(--rs-ink)', borderRadius: 8, outline: 'none', fontFamily:'"Nunito",sans-serif'
+                  }}
+                />
+                <input 
+                  type="password" 
+                  placeholder="设置密码 (至少6位)"
+                  value={passwordToBind}
+                  onChange={(e) => setPasswordToBind(e.target.value)}
+                  style={{
+                    width: '100%', padding: '8px 12px', boxSizing: 'border-box', fontSize: 12, border: '2px solid var(--rs-ink)', borderRadius: 8, outline: 'none', fontFamily:'"Nunito",sans-serif'
                   }}
                 />
                 <button 
                   className="rs-btn" 
                   disabled={binding}
                   onClick={handleBindEmail}
-                  style={{ padding: '8px 16px', fontSize: 13 }}
+                  style={{ padding: '8px 16px', fontSize: 13, width: '100%' }}
                 >
-                  {binding ? "..." : "绑定"}
+                  {binding ? "..." : "加盐绑定"}
                 </button>
               </div>
             </div>

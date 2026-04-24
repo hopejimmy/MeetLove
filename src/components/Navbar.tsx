@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useLang } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { RsLogo } from "@/components/icons/ResonanceIcons";
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang();
   const [isLogged, setIsLogged] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -18,7 +19,7 @@ export default function Navbar() {
     handleStorageChange();
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+  }, [pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem("meetlove_userId");

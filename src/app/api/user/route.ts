@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import crypto from 'crypto';
+
+const hashPassword = (password: string) => {
+  return crypto.createHash('sha256').update(password + process.env.DATABASE_URL).digest('hex');
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -49,30 +54,35 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextRequest) {
-  try {
-    const { userId, email } = await req.json();
-
-    if (!userId || !email) {
-      return NextResponse.json({ error: "User ID and Email are required" }, { status: 400 });
-    }
-
-    // Check if email is already taken by another account
-    const existing = await prisma.user.findUnique({
-      where: { email }
-    });
-
-    if (existing && existing.id !== userId) {
-      return NextResponse.json({ 
-        error: "该邮箱已有专属档案，请在首页通过登录入口找回它。" 
-      }, { status: 400 });
-    }
-
-    // Bind email
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { email }
-    });
+  export async function PUT(req: NextRequest) {
+    try {
+      const { userId, email, password } = await req.json();
+  
+      if (!userId || !email || !password) {
+        return NextResponse.json({ error: "User ID, Email, and Password are required" }, { status: 400 });
+      }
+      
+      if (password.length < 6) {
+        return NextResponse.json({ error: "密码长度必须至少为6位" }, { status: 400 });
+      }
+  
+      // Check if email is already taken by another account
+      const existing = await prisma.user.findUnique({
+        where: { email }
+      });
+  
+      if (existing && existing.id !== userId) {
+        return NextResponse.json({ 
+          error: "该邮箱已有专属档案，请在首页通过登录入口找回它。" 
+        }, { status: 400 });
+      }
+  
+      // Bind email and password
+      const hashedPassword = hashPassword(password);
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: { email, password: hashedPassword }
+      });
 
     return NextResponse.json({ success: true, user: updatedUser });
   } catch (error) {

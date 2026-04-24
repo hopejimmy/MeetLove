@@ -10,18 +10,18 @@ export default function LoginPage() {
   const { t } = useLang();
   
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    if(!email) return;
+    if(!email || !password) return alert("为了数据安全，请输入邮箱和密码！");
     setLoading(true);
 
     try {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, name })
+        body: JSON.stringify({ email, password })
       });
       const data = await res.json();
       
@@ -29,9 +29,12 @@ export default function LoginPage() {
         localStorage.setItem("meetlove_userId", data.userId);
         if(data.mbti) localStorage.setItem("meetlove_mbti", data.mbti);
         router.push("/dashboard");
+      } else {
+        alert(data.error || "登录失败");
       }
     } catch(e) {
       console.error(e);
+      alert("网络波动，请重试");
     } finally {
       setLoading(false);
     }
@@ -62,12 +65,12 @@ export default function LoginPage() {
               fontFamily: '"Nunito",sans-serif', outline: 'none', background:'#fff', color:'var(--rs-ink)'
             }}
           />
-          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 6, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink)' }}>称呼 <span style={{ opacity: .5 }}>(选填)</span></div>
+          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 6, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink)' }}>密码锁</div>
           <input 
-            type="text" 
-            placeholder={t.placeholderName}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            type="password" 
+            placeholder="请输入密码 (新用户自动注册)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             style={{ 
               width: '100%', boxSizing: 'border-box', padding: '12px 14px', fontSize: 14,
               border: '2px solid var(--rs-ink)', borderRadius: 12, marginBottom: 22,
