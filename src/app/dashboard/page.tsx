@@ -15,6 +15,7 @@ export default function Dashboard() {
   const [mbti, setMbti] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [relationships, setRelationships] = useState<any[]>([]);
+  const [showMyDetails, setShowMyDetails] = useState(false);
 
   // Progressive Profiling bindings
   const [isGuest, setIsGuest] = useState(false);
@@ -140,12 +141,8 @@ export default function Dashboard() {
       
       <div 
         className="rs-card" 
-        onClick={() => {
-          if (mbti && MBTI_DATA[mbti]) {
-            showAlert(`【${mbti} - ${MBTI_DATA[mbti].role}】\n\n${MBTI_DATA[mbti].description}`);
-          }
-        }}
-        style={{ padding: 14, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
+        onClick={() => setShowMyDetails(!showMyDetails)}
+        style={{ padding: 14, marginBottom: showMyDetails ? 12 : 24, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', transition: 'margin 0.2s' }}
       >
         <RsOrb size={54} color="lilac"/>
         <div style={{ flex: 1 }}>
@@ -156,11 +153,58 @@ export default function Dashboard() {
           </div>
           {mbti && MBTI_DATA[mbti] && <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', marginTop: 2, fontFamily:'"Nunito",sans-serif' }}>{MBTI_DATA[mbti].short}</div>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <RsMedal size={26} label="♡"/>
-          <span style={{ fontWeight: 900, fontSize:15, fontFamily:'"Nunito",sans-serif', color: 'var(--rs-ink)' }}>{relationships.length}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+          <span style={{ fontSize: 10, color: 'var(--rs-ink-soft)', fontWeight: 800 }}>{showMyDetails ? '收起' : '详细'}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <RsMedal size={26} label="♡"/>
+            <span style={{ fontWeight: 900, fontSize:15, fontFamily:'"Nunito",sans-serif', color: 'var(--rs-ink)' }}>{relationships.length}</span>
+          </div>
         </div>
       </div>
+
+      {showMyDetails && mbti && MBTI_DATA[mbti] && (
+        <div className="animate-fade-in" style={{ marginBottom: 24 }}>
+          <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 900, marginBottom: 12, color:'var(--rs-ink-soft)', letterSpacing:1 }}>属于你的灵魂深层说明书</div>
+          
+          <div className="rs-card" style={{ padding: 18, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 16 }}>❤️</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>恋爱羁绊模式</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, paddingLeft: 24, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[mbti].loveStyle}
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: 'var(--rs-cream)', margin: '0 8px' }} />
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 16 }}>🤜</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>友情相处模式</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, paddingLeft: 24, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[mbti].friendStyle}
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: 'var(--rs-cream)', margin: '0 8px' }} />
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontSize: 16 }}>💣</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)' }}>绝对踩雷区</span>
+              </div>
+              <ul style={{ margin: 0, paddingLeft: 38, fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, fontFamily:'"Nunito",sans-serif' }}>
+                {MBTI_DATA[mbti].minefields.map((mine: string, idx: number) => (
+                  <li key={idx} style={{ marginBottom: 4 }}>{mine}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <h3 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 18, fontWeight: 600, margin: 0, color: 'var(--rs-ink)' }}>你在意的人 ({relationships.length})</h3>
