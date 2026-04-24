@@ -14,6 +14,42 @@ const MBTI_TYPES = [
   "ISTJ", "ISFJ", "ESTJ", "ESFJ",
   "ISTP", "ISFP", "ESTP", "ESFP"
 ];
+
+const SCENARIOS = [
+  {
+    tag: '💔 吵架冷战',
+    title: '冷战3天，不知道怎么开口',
+    sub: '想缓和气氛，但怕一开口又吵起来',
+    userMbti: 'INFJ', userColor: 'var(--rs-coral)',
+    contactLabel: '伴侣', contactMbti: 'ESTP', contactColor: 'var(--rs-cobalt)',
+    advice: '「我知道你现在可能还需要空间。我不是来继续争的——只是想让你知道，我在乎我们，也在乎你的感受。等你准备好，我想好好聊聊。」',
+  },
+  {
+    tag: '👨‍👩‍👧 孩子教育',
+    title: '孩子不肯尝试新东西，一说就叛逆',
+    sub: '想让孩子放下手机、尝试新活动，说什么都没用',
+    userMbti: 'ESTJ', userColor: 'var(--rs-mint)',
+    contactLabel: '孩子', contactMbti: 'INFP', contactColor: 'var(--rs-lilac)',
+    advice: '「我不是要强迫你，我只是有点担心你最近的状态。你愿意跟我说说，现在什么事让你最有意思吗？」',
+  },
+  {
+    tag: '🌪️ 父母控制',
+    title: '父母说"为你好"，句句是控制',
+    sub: '爱他们，但每次通话后都精神内耗半天',
+    userMbti: 'INFP', userColor: 'var(--rs-lilac)',
+    contactLabel: '父母', contactMbti: 'ESTJ', contactColor: 'var(--rs-honey)',
+    advice: '「妈，我知道你说这些是因为在乎我。但这件事我需要按自己的节奏来决定，这样我才能对结果负责。我会认真考虑你的意见的。」',
+  },
+  {
+    tag: '💼 职场压力',
+    title: '老板说"你好好想想"，彻夜未眠',
+    sub: '不知道他什么意思，不知道自己哪里出了问题',
+    userMbti: 'INFJ', userColor: 'var(--rs-coral)',
+    contactLabel: '上司', contactMbti: 'ENTJ', contactColor: 'var(--rs-cobalt)',
+    advice: '「您好，关于昨天的反馈，我想确认一下我的理解是否正确。您希望我在哪个方向上做调整？这样我能更有针对性地改进。」',
+  },
+];
+
 export default function OnboardingForm() {
   const router = useRouter();
   const { t, lang } = useLang();
@@ -81,41 +117,6 @@ export default function OnboardingForm() {
       saveMbtiAndRedirect(resultMbti);
     }
   };
-
-  const SCENARIOS = [
-    {
-      tag: '💔 吵架冷战',
-      title: '冷战3天，不知道怎么开口',
-      sub: '想缓和气氛，但怕一开口又吵起来',
-      userMbti: 'INFJ', userColor: 'var(--rs-coral)',
-      contactLabel: '伴侣', contactMbti: 'ESTP', contactColor: 'var(--rs-cobalt)',
-      advice: '「我知道你现在可能还需要空间。我不是来继续争的——只是想让你知道，我在乎我们，也在乎你的感受。等你准备好，我想好好聊聊。」',
-    },
-    {
-      tag: '👨‍👩‍👧 孩子教育',
-      title: '孩子不肯尝试新东西，一说就叛逆',
-      sub: '想让孩子放下手机、尝试新活动，说什么都没用',
-      userMbti: 'ESTJ', userColor: 'var(--rs-mint)',
-      contactLabel: '孩子', contactMbti: 'INFP', contactColor: 'var(--rs-lilac)',
-      advice: '「我不是要强迫你，我只是有点担心你最近的状态。你愿意跟我说说，现在什么事让你最有意思吗？」',
-    },
-    {
-      tag: '🌪️ 父母控制',
-      title: '父母说"为你好"，句句是控制',
-      sub: '爱他们，但每次通话后都精神内耗半天',
-      userMbti: 'INFP', userColor: 'var(--rs-lilac)',
-      contactLabel: '父母', contactMbti: 'ESTJ', contactColor: 'var(--rs-honey)',
-      advice: '「妈，我知道你说这些是因为在乎我。但这件事我需要按自己的节奏来决定，这样我才能对结果负责。我会认真考虑你的意见的。」',
-    },
-    {
-      tag: '💼 职场压力',
-      title: '老板说"你好好想想"，彻夜未眠',
-      sub: '不知道他什么意思，不知道自己哪里出了问题',
-      userMbti: 'INFJ', userColor: 'var(--rs-coral)',
-      contactLabel: '上司', contactMbti: 'ENTJ', contactColor: 'var(--rs-cobalt)',
-      advice: '「您好，关于昨天的反馈，我想确认一下我的理解是否正确。您希望我在哪个方向上做调整？这样我能更有针对性地改进。」',
-    },
-  ];
 
   // 1. Hero State
   if (step === "hero") {
@@ -277,20 +278,23 @@ export default function OnboardingForm() {
                 width: 36, height: 36, borderRadius: '50%',
                 background: '#fff', border: '2px solid var(--rs-ink)',
                 boxShadow: '0 3px 0 0 var(--rs-ink)',
-                fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 opacity: carouselIndex === 0 ? 0.3 : 1,
+                cursor: carouselIndex === 0 ? 'not-allowed' : 'pointer',
               }}
             >←</button>
 
             <div style={{ display: 'flex', gap: 6 }}>
               {SCENARIOS.map((_, i) => (
-                <div
+                <button
                   key={i}
                   onClick={() => setCarouselIndex(i)}
+                  aria-label={`场景 ${i + 1}`}
                   style={{
                     width: 8, height: 8, borderRadius: '50%', cursor: 'pointer',
                     background: i === carouselIndex ? 'var(--rs-coral)' : 'var(--rs-cream)',
                     border: '1.5px solid var(--rs-ink)',
+                    padding: 0,
                   }}
                 />
               ))}
@@ -303,8 +307,9 @@ export default function OnboardingForm() {
                 width: 36, height: 36, borderRadius: '50%',
                 background: '#fff', border: '2px solid var(--rs-ink)',
                 boxShadow: '0 3px 0 0 var(--rs-ink)',
-                fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 opacity: carouselIndex === SCENARIOS.length - 1 ? 0.3 : 1,
+                cursor: carouselIndex === SCENARIOS.length - 1 ? 'not-allowed' : 'pointer',
               }}
             >→</button>
           </div>
