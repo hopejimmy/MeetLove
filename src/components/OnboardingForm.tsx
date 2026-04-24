@@ -160,7 +160,19 @@ export default function OnboardingForm() {
         <button onClick={() => setStep("hero")} style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }}>← 返回</button>
         <div className="rs-card" style={{ padding: 22 }}>
           <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>选择推演深度</h2>
-          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 24px', fontFamily:'"Nunito",sans-serif' }}>更丰富的采样将极大地提高底层大模型抓取准确度的上限。</p>
+          <div style={{ marginBottom: 24 }}>
+            <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 12px', fontFamily:'"Nunito",sans-serif', lineHeight: 1.5 }}>
+              人类的心理绝非只言片语就能概括。基础版可快速提供定性区间，而 <strong>PRO 高阶量表</strong> 将解锁最高 64 题的高精密雷达。
+            </p>
+            <div style={{ background: 'rgba(255,180,162, 0.15)', padding: '12px 14px', borderRadius: 10, border: '1px solid var(--rs-coral-dk)' }}>
+              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 4, letterSpacing: 0.5 }}>👑 PRO 核心特权</div>
+              <ul style={{ margin: 0, paddingLeft: 16, fontSize: 12, color: 'var(--rs-ink)', fontFamily:'"Nunito",sans-serif', lineHeight: 1.6 }}>
+                <li>深度刻画潜意识动机与依恋盲点</li>
+                <li>防平局微量加权算法，100% 精准锁定</li>
+                <li>解锁专属超长维度解析雷达图</li>
+              </ul>
+            </div>
+          </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <button className="rs-btn" onClick={() => startQuiz(8)} style={{ padding: '14px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
