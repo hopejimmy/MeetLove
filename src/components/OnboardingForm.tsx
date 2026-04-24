@@ -84,31 +84,103 @@ export default function OnboardingForm() {
   // 1. Hero State
   if (step === "hero") {
     return (
-      <div style={{ padding: '20px 20px', position: 'relative', zIndex: 2 }}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 14, position:'relative' }}>
-          <div style={{ animation: 'bob 2.2s ease-in-out infinite' }}><RsOrb size={52} color="coral" /></div>
-          <div style={{ animation: 'bob 2s ease-in-out infinite .3s', marginTop: 12 }}><RsStar size={38} color="#F2C14E"/></div>
-          <div style={{ animation: 'bob 2.4s ease-in-out infinite .6s' }}><RsOrb size={52} color="mint" /></div>
+      <div style={{ padding: '10px 16px 60px', position: 'relative', zIndex: 2, maxWidth: 500, margin: '0 auto' }}>
+        
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 10, position:'relative', paddingTop: 20 }}>
+          <div style={{ animation: 'bob 2.2s ease-in-out infinite' }}><RsOrb size={42} color="coral" /></div>
+          <div style={{ animation: 'bob 2s ease-in-out infinite .3s', marginTop: 10 }}><RsStar size={30} color="#F2C14E"/></div>
+          <div style={{ animation: 'bob 2.4s ease-in-out infinite .6s' }}><RsOrb size={42} color="mint" /></div>
         </div>
-        <div className="rs-card" style={{ textAlign: 'center', padding: '22px 18px', maxWidth: '400px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: '#C7482A', letterSpacing: 3, marginBottom: 6 }}>· RELATE ·</div>
-          <h1 style={{ fontFamily:'Fraunces,serif', fontSize: 26, fontWeight: 500, fontStyle:'italic', margin: '2px 0 10px', lineHeight: 1.15, letterSpacing: -0.3 }}>
-            {lang === 'en' ? 'Relate to' : '找到和你'}<br/><em>{lang === 'en' ? 'your resonance' : '同频的灵魂'}</em>
+
+        {/* HOOK Section */}
+        <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 36 }}>
+          <div style={{ fontSize: 10, fontWeight: 900, color: 'var(--rs-coral-dk)', letterSpacing: 2, marginBottom: 10 }}>· RELATE 同频 ·</div>
+          <h1 style={{ fontFamily:'"Fraunces",serif', fontSize: 26, fontWeight: 700, margin: '0 0 14px', lineHeight: 1.35, color: 'var(--rs-ink)' }}>
+            为什么最亲密的人，<br/>总是产生最深的<u style={{textDecorationColor: 'var(--rs-coral)', textUnderlineOffset: 4}}>精神内耗？</u>
           </h1>
-          <p style={{ fontSize: 12, color: '#5A4A3E', lineHeight: 1.6, margin: '6px 0 18px', fontFamily:'Nunito,sans-serif' }}>
-            {t.heroSubtitle}
+          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, fontFamily:'"Nunito",sans-serif' }}>
+            其实，你们并没有错。<br/>只是你们的「灵魂波段」完全不同。<br/>Relate，带你破解潜意识的情感密码。
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <button className="rs-btn" onClick={() => setStep("length_select")}>
-              {t.beginTest}
-            </button>
-            <button className="rs-btn ghost" onClick={() => setStep("select")}>
-              {t.knowMbti}
-            </button>
+        </div>
+
+        {/* PAIN POINTS Section */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 40 }}>
+          <div className="rs-card" style={{ padding: '18px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+            <div style={{ fontSize: 26, marginTop: -2 }}>💔</div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: 'var(--rs-ink)' }}>伴侣的频段错位</div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                “我歇斯底里地想要一个回应，TA 却冷暴力一言不发地想要自己的空间。”
+              </div>
+            </div>
+          </div>
+
+          <div className="rs-card" style={{ padding: '18px 16px', display: 'flex', gap: 14, alignItems: 'flex-start', background: 'var(--rs-paper)' }}>
+            <div style={{ fontSize: 26, marginTop: -2 }}>🌪️</div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: 'var(--rs-ink)' }}>代际的沟通黑洞</div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                “父母的一句明明是‘为你好’，听在耳朵里全是令人窒息的控制与绑架。”
+              </div>
+            </div>
+          </div>
+
+          <div className="rs-card" style={{ padding: '18px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+            <div style={{ fontSize: 26, marginTop: -2 }}>💼</div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: 'var(--rs-ink)' }}>职场的无效内耗</div>
+              <div style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                “上司随意的一句话，让我彻夜未眠怀疑人生，不知道接下来怎么做。”
+              </div>
+            </div>
           </div>
         </div>
-        <div style={{ position: 'absolute', top: 70, right: '10vw', animation: 'bob 1.8s ease-in-out infinite' }}><RsMedal size={26} /></div>
-        <div style={{ position: 'absolute', top: 140, left: '5vw', animation: 'bob 1.5s ease-in-out infinite .4s' }}><RsPetal size={20} color="#B49BE8"/></div>
+
+        {/* SOLUTION Section */}
+        <div style={{ marginBottom: 40, textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 20 }}>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--rs-ink)', margin: 0 }}>如何打破僵局？</h2>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, textAlign: 'left' }}>
+            <div className="rs-card" style={{ padding: 14, background: 'var(--rs-honey)', borderColor: 'var(--rs-ink)' }}>
+              <div style={{ fontSize: 24, marginBottom: 8 }}>👑</div>
+              <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 6 }}>深度心灵雷达</div>
+              <div style={{ fontSize: 11, color: 'var(--rs-ink)', lineHeight: 1.5, fontWeight: 700 }}>解锁专业人格探测，直击恋爱羁绊、友情底线与绝对雷区。</div>
+            </div>
+            <div className="rs-card" style={{ padding: 14, background: 'var(--rs-mint)', borderColor: 'var(--rs-ink)' }}>
+              <div style={{ fontSize: 24, marginBottom: 8 }}>🤖</div>
+              <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 6 }}>AI破冰引擎</div>
+              <div style={{ fontSize: 11, color: 'var(--rs-ink)', lineHeight: 1.5, fontWeight: 700 }}>遇到冲突不知所措？让 AI 生成最精准的话术。</div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="rs-card" style={{ textAlign: 'center', padding: '24px 20px', background: 'var(--rs-cream)' }}>
+          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--rs-ink)', marginBottom: 8 }}>不要再在黑暗中乱撞</div>
+          <p style={{ fontSize: 12, color: 'var(--rs-ink-soft)', marginBottom: 20, lineHeight: 1.5 }}>
+            现在就免费进行一次 8 题快速测写，找到你的专属频率坐标。
+          </p>
+          
+          <button 
+            className="rs-btn coral" 
+            style={{ width: '100%', marginBottom: 12, padding: '14px 0', fontSize: 15 }}
+            onClick={() => setStep("length_select")}
+          >
+            {t.beginTest}
+          </button>
+          
+          <button 
+            className="rs-btn ghost" 
+            style={{ width: '100%', fontSize: 13, padding: '10px 0' }}
+            onClick={() => router.push("/login")}
+          >
+            {t.knowMbti}
+          </button>
+        </div>
+
       </div>
     );
   }
