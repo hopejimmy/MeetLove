@@ -140,19 +140,39 @@ export default function OnboardingForm() {
         <div style={{ marginBottom: 40, textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 20 }}>
             <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--rs-ink)', margin: 0 }}>如何打破僵局？</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--rs-ink)', margin: 0 }}>Relate 如何帮你扭转局面？</h2>
             <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, textAlign: 'left' }}>
-            <div className="rs-card" style={{ padding: 14, background: 'var(--rs-honey)', borderColor: 'var(--rs-ink)' }}>
-              <div style={{ fontSize: 24, marginBottom: 8 }}>👑</div>
-              <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 6 }}>深度心灵雷达</div>
-              <div style={{ fontSize: 11, color: 'var(--rs-ink)', lineHeight: 1.5, fontWeight: 700 }}>解锁专业人格探测，直击恋爱羁绊、友情底线与绝对雷区。</div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'left' }}>
+            <div className="rs-card" style={{ padding: '16px 14px', background: 'var(--rs-honey)', borderColor: 'var(--rs-ink)', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 30, marginTop: -4 }}>📖</div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6 }}>1. 提前拿到底牌，不再瞎猜</div>
+                <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontWeight: 700 }}>
+                  为TA建立专属测试档案。无需反复试探，系统直接呈上 TA 的「恋爱羁绊」与「绝对雷区」，把无效踩雷降至冰点。
+                </div>
+              </div>
             </div>
-            <div className="rs-card" style={{ padding: 14, background: 'var(--rs-mint)', borderColor: 'var(--rs-ink)' }}>
-              <div style={{ fontSize: 24, marginBottom: 8 }}>🤖</div>
-              <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 6 }}>AI破冰引擎</div>
-              <div style={{ fontSize: 11, color: 'var(--rs-ink)', lineHeight: 1.5, fontWeight: 700 }}>遇到冲突不知所措？让 AI 生成最精准的话术。</div>
+            
+            <div className="rs-card" style={{ padding: '16px 14px', background: 'var(--rs-lilac)', borderColor: 'var(--rs-ink)', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 30, marginTop: -4 }}>⚡️</div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: '#fff' }}>2. 诊断你们的「相性错位点」</div>
+                <div style={{ fontSize: 12, color: '#fff', lineHeight: 1.5, fontWeight: 700 }}>
+                  为什么父母觉得是爱，你却觉得是控制？雷达精准对比你们的人格差异，帮你跳出情绪漩涡，彻底看透矛盾深层的本质。
+                </div>
+              </div>
+            </div>
+
+            <div className="rs-card" style={{ padding: '16px 14px', background: 'var(--rs-mint)', borderColor: 'var(--rs-ink)', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 30, marginTop: -4 }}>🤖</div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6 }}>3. 拥有一个实战级破冰军师</div>
+                <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontWeight: 700 }}>
+                  “刚刚大吵一架，第一句话怎么开口？” 进入 AI 推演，它会结合你俩特有的性格模型，替你定制一句让对方瞬间软化的高情商回复。
+                </div>
+              </div>
             </div>
           </div>
         </div>
