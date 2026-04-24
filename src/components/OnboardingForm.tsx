@@ -217,7 +217,7 @@ export default function OnboardingForm() {
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-mint)', border: '2px solid var(--rs-ink)' }}></div>
               <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 4: AI 战术指导</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
-                遇到矛盾冷战？直接进入实战演练输入场景，AI 立刻为你输出定制高情商话术。
+                遇到实际的沟通问题？直接进入实战演练输入场景，AI 立刻为你输出定制高情商话术。
               </div>
             </div>
           </div>
