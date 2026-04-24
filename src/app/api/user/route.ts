@@ -90,3 +90,24 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Failed to bind email" }, { status: 500 });
   }
 }
+
+// 模拟升级至 PRO 高阶权限
+export async function PATCH(req: NextRequest) {
+  try {
+    const { userId } = await req.json();
+
+    if (!userId) {
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { isPremium: true }
+    });
+
+    return NextResponse.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error("Failed to upgrade premium", error);
+    return NextResponse.json({ error: "Failed to upgrade premium" }, { status: 500 });
+  }
+}

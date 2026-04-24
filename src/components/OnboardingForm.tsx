@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLang } from "@/context/LanguageContext";
 import { RsOrb, RsStar, RsMedal, RsPetal } from "@/components/icons/ResonanceIcons";
 import styles from "./OnboardingForm.module.css";
+import { generateQuiz, calculateMbtiScore, QuestionDef } from "@/lib/questionBank";
 
 const MBTI_TYPES = [
   "INTJ", "INTP", "ENTJ", "ENTP",
@@ -12,38 +13,14 @@ const MBTI_TYPES = [
   "ISTJ", "ISFJ", "ESTJ", "ESFJ",
   "ISTP", "ISFP", "ESTP", "ESFP"
 ];
-
-const QUIZ_QUESTIONS = [
-  {
-    id: "E_I",
-    text: "周末终于有空休息了，你倾向于怎么度过？",
-    optionA: { text: "去参加个聚会或者和朋友去热闹的局", type: "E" },
-    optionB: { text: "自己一个人在家宅着，看书追剧或者睡觉", type: "I" }
-  },
-  {
-    id: "S_N",
-    text: "你在看一部悬疑电影时，你更倾向于注意：",
-    optionA: { text: "角色的微表情和实际的线索细节", type: "S" },
-    optionB: { text: "隐藏的暗号和导演想要表达的深层隐喻", type: "N" }
-  },
-  {
-    id: "T_F",
-    text: "如果你的好朋友向你诉苦抱怨一件事，你通常的第一反应是：",
-    optionA: { text: "帮 TA 梳理问题出在哪，并给出解决思路", type: "T" },
-    optionB: { text: "先给 TA 共情和安慰，照顾 TA 此刻的情绪", type: "F" }
-  },
-  {
-    id: "J_P",
-    text: "准备出去长途旅行，你的行李和行程往往是：",
-    optionA: { text: "提前做好详细的攻略，列好行李清单并按计划执行", type: "J" },
-    optionB: { text: "有个大概的目的地就行，根据当天的心情和意外惊喜决定行程", type: "P" }
-  }
-];
-
 export default function OnboardingForm() {
   const router = useRouter();
   const { t, lang } = useLang();
   const [step, setStep] = useState<"hero" | "select" | "quiz" | "completing">("hero");
+  
+  // 基础首页免费题库 (8题)
+  const [quizQuestions] = useState<QuestionDef[]>(() => generateQuiz(8));
+  
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null);
@@ -78,11 +55,11 @@ export default function OnboardingForm() {
     const newAnswers = [...quizAnswers, typeResult];
     setQuizAnswers(newAnswers);
 
-    if (quizIndex < QUIZ_QUESTIONS.length - 1) {
+    if (quizIndex < quizQuestions.length - 1) {
       setQuizIndex(prev => prev + 1);
     } else {
       // Finished quiz! Calculate result
-      const resultMbti = newAnswers.join("");
+      const resultMbti = calculateMbtiScore(newAnswers);
       setSelectedMbti(resultMbti);
       setStep("completing");
       saveMbtiAndRedirect(resultMbti);
@@ -163,46 +140,46 @@ export default function OnboardingForm() {
 
   // 3. Quiz State
   if (step === "quiz") {
-    const currentQ = QUIZ_QUESTIONS[quizIndex];
+    const currentQ = quizQuestions[quizIndex];
     return (
       <div className="animate-fade-in" style={{ padding: '16px 18px', maxWidth: 500, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <button onClick={() => {
             if(quizIndex === 0) setStep("hero");
             else { setQuizIndex(prev => prev - 1); setQuizAnswers(prev => prev.slice(0, -1)); }
-          }} style={{ background: 'none', border:'none', fontSize:12, fontWeight: 800, color:'var(--rs-ink)', cursor:'pointer', fontFamily:'"Nunito",sans-serif', padding:0 }}>←</button>
+          }} style={{ background: 'none', border:'none', fontSize:12, fontWeight: 800, color:'var(--rs-ink)', cursor:'pointer', fontFamily:'"Nunito",sans-serif', padding:0 }}>← 返回</button>
           
-          <span style={{ fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 12, color: 'var(--rs-ink)' }}>问题 {quizIndex + 1} / {QUIZ_QUESTIONS.length}</span>
+          <span style={{ fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 12, color: 'var(--rs-ink)' }}>问题 {quizIndex + 1} / {quizQuestions.length}</span>
           
-          <div style={{ display: 'flex', gap: 4 }}>
-            {QUIZ_QUESTIONS.map((_, i) => (
-              <div key={i} style={{ width: 24, height: 7, borderRadius: 4, background: i <= quizIndex ? 'var(--rs-honey)' : 'var(--rs-cream)', border:'2px solid var(--rs-ink)' }}/>
+          <div style={{ display: 'flex', gap: 2, flex: 1, maxWidth: 100, marginLeft: 16 }}>
+            {quizQuestions.map((_, i) => (
+              <div key={i} style={{ flex: 1, height: 6, borderRadius: 3, background: i <= quizIndex ? 'var(--rs-honey)' : 'var(--rs-cream)', border:'1px solid var(--rs-ink)' }}/>
             ))}
           </div>
         </div>
 
         <div className="rs-card" style={{ padding: 18, marginBottom: 16 }}>
-          <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 8, letterSpacing:1 }}>{currentQ.id.replace('_', ' / ')}</div>
+          <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 8, letterSpacing:1 }}>{currentQ.axis.replace(/(E|I|S|N|T|F|J|P)/g, '$1 ').trim().replace(' ', ' / ')}</div>
           <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 500, lineHeight: 1.35 }}>
             {currentQ.text}
           </div>
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <button className="rs-card" onClick={() => handleQuizAnswer(currentQ.optionA.type)} 
+          <button className="rs-card" onClick={() => handleQuizAnswer(currentQ.optA.val)} 
             onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
             onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 5px 0 0 var(--rs-ink)'; }}
             style={{ padding: 14, textAlign: 'left', cursor: 'pointer', fontFamily: '"Nunito",sans-serif', transition:'transform .1s, box-shadow .1s', display: 'flex', gap: 12, alignItems: 'center' }}>
              <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--rs-honey)', color:'var(--rs-ink)', border: '2.5px solid var(--rs-ink)', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 16, flexShrink: 0 }}>A</div>
-             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{currentQ.optionA.text}</div>
+             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{currentQ.optA.label}</div>
           </button>
           
-          <button className="rs-card" onClick={() => handleQuizAnswer(currentQ.optionB.type)} 
+          <button className="rs-card" onClick={() => handleQuizAnswer(currentQ.optB.val)} 
             onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
             onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 5px 0 0 var(--rs-ink)'; }}
             style={{ padding: 14, textAlign: 'left', cursor: 'pointer', fontFamily: '"Nunito",sans-serif', transition:'transform .1s, box-shadow .1s', display: 'flex', gap: 12, alignItems: 'center' }}>
              <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--rs-lilac)', color:'#fff', border: '2.5px solid var(--rs-ink)', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 16, flexShrink: 0 }}>B</div>
-             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{currentQ.optionB.text}</div>
+             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{currentQ.optB.label}</div>
           </button>
         </div>
       </div>
