@@ -414,7 +414,7 @@ export default function OnboardingForm() {
             style={{ width: '100%', marginBottom: 12, padding: '14px 0', fontSize: 15 }}
             onClick={() => setStep("length_select")}
           >
-            免费开始测试 →
+            {t.beginTest}
           </button>
 
           <button
@@ -422,7 +422,7 @@ export default function OnboardingForm() {
             style={{ width: '100%', fontSize: 13, padding: '10px 0' }}
             onClick={() => setStep("select")}
           >
-            我已知道我的 MBTI 型
+            {t.knowMbti}
           </button>
         </div>
 
