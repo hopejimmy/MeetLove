@@ -124,38 +124,63 @@ export default function OnboardingForm() {
     return (
       <div style={{ padding: '10px 16px 60px', position: 'relative', zIndex: 2, maxWidth: 500, margin: '0 auto' }}>
         
+        {/* Comic speech bubble — points left toward hero headline */}
         <Link
-        href="/mbti"
-        aria-label="不了解 MBTI？点这里了解"
-        style={{
-          position: 'absolute',
-          top: 18,
-          right: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 2,
-          padding: '8px 10px',
-          background: 'var(--rs-honey)',
-          border: '2px solid var(--rs-ink)',
-          borderRadius: 12,
-          boxShadow: '3px 3px 0 0 var(--rs-ink)',
-          fontSize: 11,
-          fontWeight: 900,
-          color: 'var(--rs-ink)',
-          textDecoration: 'none',
-          animation: 'bob 2.5s ease-in-out infinite',
-          fontFamily: '"Nunito", sans-serif',
-          transform: 'rotate(3deg)',
-          maxWidth: 72,
-          textAlign: 'center',
-          lineHeight: 1.35,
-          zIndex: 10,
-        }}
-      >
-        <span style={{ fontSize: 16 }}>💡</span>
-        <span>不了解<br />MBTI？<br />点这里</span>
-      </Link>
+          href="/mbti"
+          aria-label="不了解 MBTI？点这里了解"
+          style={{
+            position: 'absolute',
+            top: 22,
+            right: 0,
+            textDecoration: 'none',
+            animation: 'bob 2.8s ease-in-out infinite',
+            zIndex: 10,
+          }}
+        >
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            {/* Bubble body */}
+            <div style={{
+              background: 'var(--rs-honey)',
+              border: '2.5px solid var(--rs-ink)',
+              borderRadius: '18px 16px 16px 14px',
+              boxShadow: '3px 3px 0 0 var(--rs-ink)',
+              padding: '9px 11px',
+              maxWidth: 76,
+              textAlign: 'center',
+              fontSize: 11,
+              fontWeight: 900,
+              color: 'var(--rs-ink)',
+              fontFamily: '"Nunito", sans-serif',
+              lineHeight: 1.4,
+              transform: 'rotate(-2deg)',
+            }}>
+              <div style={{ fontSize: 17, marginBottom: 3 }}>💡</div>
+              <div>不了解<br />MBTI？<br />点这里</div>
+            </div>
+            {/* Tail outer (border color) — points left */}
+            <div style={{
+              position: 'absolute',
+              top: 22,
+              left: -13,
+              width: 0,
+              height: 0,
+              borderTop: '8px solid transparent',
+              borderBottom: '8px solid transparent',
+              borderRight: '13px solid var(--rs-ink)',
+            }} />
+            {/* Tail inner (fill color) */}
+            <div style={{
+              position: 'absolute',
+              top: 24,
+              left: -9,
+              width: 0,
+              height: 0,
+              borderTop: '6px solid transparent',
+              borderBottom: '6px solid transparent',
+              borderRight: '10px solid var(--rs-honey)',
+            }} />
+          </div>
+        </Link>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 10, position:'relative', paddingTop: 20 }}>
           <div style={{ animation: 'bob 2.2s ease-in-out infinite' }}><RsOrb size={42} color="coral" /></div>
