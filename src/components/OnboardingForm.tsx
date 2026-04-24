@@ -124,7 +124,40 @@ export default function OnboardingForm() {
     return (
       <div style={{ padding: '10px 16px 60px', position: 'relative', zIndex: 2, maxWidth: 500, margin: '0 auto' }}>
         
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 10, position:'relative', paddingTop: 20 }}>
+        <Link
+        href="/mbti"
+        aria-label="不了解 MBTI？点这里了解"
+        style={{
+          position: 'absolute',
+          top: 18,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 2,
+          padding: '8px 10px',
+          background: 'var(--rs-honey)',
+          border: '2px solid var(--rs-ink)',
+          borderRadius: 12,
+          boxShadow: '3px 3px 0 0 var(--rs-ink)',
+          fontSize: 11,
+          fontWeight: 900,
+          color: 'var(--rs-ink)',
+          textDecoration: 'none',
+          animation: 'bob 2.5s ease-in-out infinite',
+          fontFamily: '"Nunito", sans-serif',
+          transform: 'rotate(3deg)',
+          maxWidth: 72,
+          textAlign: 'center',
+          lineHeight: 1.35,
+          zIndex: 10,
+        }}
+      >
+        <span style={{ fontSize: 16 }}>💡</span>
+        <span>不了解<br />MBTI？<br />点这里</span>
+      </Link>
+
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 10, position:'relative', paddingTop: 20 }}>
           <div style={{ animation: 'bob 2.2s ease-in-out infinite' }}><RsOrb size={42} color="coral" /></div>
           <div style={{ animation: 'bob 2s ease-in-out infinite .3s', marginTop: 10 }}><RsStar size={30} color="#F2C14E"/></div>
           <div style={{ animation: 'bob 2.4s ease-in-out infinite .6s' }}><RsOrb size={42} color="mint" /></div>
@@ -168,26 +201,6 @@ export default function OnboardingForm() {
             我已知道我的 MBTI 型
           </button>
 
-          <div style={{ textAlign: 'center', marginTop: 14 }}>
-            <Link
-              href="/mbti"
-              style={{
-                display: 'inline-block',
-                padding: '7px 16px',
-                border: '1.5px dashed var(--rs-ink)',
-                borderRadius: 30,
-                background: 'var(--rs-cream)',
-                fontSize: 12,
-                fontWeight: 700,
-                color: 'var(--rs-ink)',
-                textDecoration: 'none',
-                animation: 'bob 2.5s ease-in-out infinite',
-                fontFamily: '"Nunito", sans-serif',
-              }}
-            >
-              💡 第一次听说 MBTI？点这里了解 →
-            </Link>
-          </div>
         </div>
 
         {/* PAIN POINTS Section */}
