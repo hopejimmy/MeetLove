@@ -337,7 +337,7 @@ export default function OnboardingForm() {
             <div className="rs-card" style={{ padding: '16px 14px', background: 'var(--rs-lilac)', borderColor: 'var(--rs-ink)', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
               <div style={{ fontSize: 30, marginTop: -4 }}>⚡️</div>
               <div>
-                <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: '#fff' }}>2. 诊断你们的「相性错位点」</div>
+                <div style={{ fontSize: 14, fontWeight: 900, marginBottom: 6, color: '#fff' }}>2. 找出你们吵架的根本原因</div>
                 <div style={{ fontSize: 12, color: '#fff', lineHeight: 1.5, fontWeight: 700 }}>
                   为什么父母觉得是爱，你却觉得是控制？雷达精准对比你们的人格差异，帮你跳出情绪漩涡，彻底看透矛盾深层的本质。
                 </div>
@@ -378,7 +378,7 @@ export default function OnboardingForm() {
 
             <div style={{ position: 'relative', marginBottom: 28 }}>
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-honey)', border: '2px solid var(--rs-ink)' }}></div>
-              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 2: 组建亲友星系</div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 2: 添加你在意的人</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
                 在个人大厅点击「添加档案」，添加你在意的人到你的人际网络。
               </div>
@@ -386,7 +386,7 @@ export default function OnboardingForm() {
 
             <div style={{ position: 'relative', marginBottom: 28 }}>
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-lilac)', border: '2px solid var(--rs-ink)' }}></div>
-              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 3: 查阅灵魂说明书</div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 3: 查看 TA 的相处说明书</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
                 随时点开任意一张亲友小卡片，即可快速获得与 TA 的「避雷生存指南」。
               </div>
@@ -394,7 +394,7 @@ export default function OnboardingForm() {
 
             <div style={{ position: 'relative' }}>
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-mint)', border: '2px solid var(--rs-ink)' }}></div>
-              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 4: AI 战术指导</div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 4: 遇到冲突？让 AI 给你出招</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
                 遇到实际的沟通问题？直接进入实战演练输入场景，AI 立刻为你输出定制高情商话术。
               </div>
@@ -404,25 +404,25 @@ export default function OnboardingForm() {
 
         {/* CTA Section */}
         <div className="rs-card" style={{ textAlign: 'center', padding: '24px 20px', background: 'var(--rs-cream)' }}>
-          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--rs-ink)', marginBottom: 8 }}>不要再在黑暗中乱撞</div>
+          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--rs-ink)', marginBottom: 8 }}>2 分钟，找到你们问题的根源</div>
           <p style={{ fontSize: 12, color: 'var(--rs-ink-soft)', marginBottom: 20, lineHeight: 1.5 }}>
-            现在就免费进行一次 8 题快速测写，找到你的专属频率坐标。
+            免费完成 8 题测试，立刻获得你的专属沟通建议。
           </p>
-          
-          <button 
-            className="rs-btn coral" 
+
+          <button
+            className="rs-btn coral"
             style={{ width: '100%', marginBottom: 12, padding: '14px 0', fontSize: 15 }}
             onClick={() => setStep("length_select")}
           >
-            {t.beginTest}
+            免费开始测试 →
           </button>
-          
-          <button 
-            className="rs-btn ghost" 
+
+          <button
+            className="rs-btn ghost"
             style={{ width: '100%', fontSize: 13, padding: '10px 0' }}
-            onClick={() => router.push("/login")}
+            onClick={() => setStep("select")}
           >
-            {t.knowMbti}
+            我已知道我的 MBTI 型
           </button>
         </div>
 
