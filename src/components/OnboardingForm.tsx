@@ -177,6 +177,52 @@ export default function OnboardingForm() {
           </div>
         </div>
 
+        {/* HOW TO USE Section (Step-by-step guide) */}
+        <div style={{ marginBottom: 44 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 24 }}>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--rs-ink)', margin: 0 }}>极简上手指南</h2>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+          </div>
+
+          <div style={{ position: 'relative', paddingLeft: 24, marginLeft: 16 }}>
+            {/* 纵向时间轴线条 */}
+            <div style={{ position: 'absolute', left: 5, top: 10, bottom: 10, width: 2, background: 'var(--rs-ink)' }}></div>
+
+            <div style={{ position: 'relative', marginBottom: 28 }}>
+              <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-coral)', border: '2px solid var(--rs-ink)' }}></div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 1: 确立自身频段</div>
+              <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                花 2 分钟完成基础推演测试，拿到专属你的 MBTI 核心光谱。
+              </div>
+            </div>
+
+            <div style={{ position: 'relative', marginBottom: 28 }}>
+              <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-honey)', border: '2px solid var(--rs-ink)' }}></div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 2: 组建亲友星系</div>
+              <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                在个人大厅点击「添加档案」，让你在意或头疼的人加入你的人际网络。
+              </div>
+            </div>
+
+            <div style={{ position: 'relative', marginBottom: 28 }}>
+              <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-lilac)', border: '2px solid var(--rs-ink)' }}></div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 3: 查阅灵魂说明书</div>
+              <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                随时点开任意一张小卡片，即可快速获得与 TA 的「避雷生存指南」。
+              </div>
+            </div>
+
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-mint)', border: '2px solid var(--rs-ink)' }}></div>
+              <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 4: AI 战术指导</div>
+              <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
+                遇到矛盾冷战？直接进入实战演练输入场景，AI 立刻为你输出定制高情商话术。
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <div className="rs-card" style={{ textAlign: 'center', padding: '24px 20px', background: 'var(--rs-cream)' }}>
           <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--rs-ink)', marginBottom: 8 }}>不要再在黑暗中乱撞</div>
