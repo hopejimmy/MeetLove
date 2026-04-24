@@ -201,7 +201,7 @@ export default function OnboardingForm() {
               <div style={{ position: 'absolute', left: -26, top: 2, width: 14, height: 14, borderRadius: '50%', background: 'var(--rs-honey)', border: '2px solid var(--rs-ink)' }}></div>
               <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>Step 2: 组建亲友星系</div>
               <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)', lineHeight: 1.5, fontFamily:'"Nunito",sans-serif' }}>
-                在个人大厅点击「添加档案」，让你在意或头疼的人加入你的人际网络。
+                在个人大厅点击「添加档案」，添加你在意的人到你的人际网络。
               </div>
             </div>
 
