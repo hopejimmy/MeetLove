@@ -315,7 +315,7 @@ export default function AddRelativePage() {
 
         <div className="rs-card" style={{ padding: 18, marginBottom: 16 }}>
           <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 500, lineHeight: 1.35 }}>
-            {q.text}
+            {q.text.replace(/TA/g, name || "TA")}
           </div>
         </div>
         
