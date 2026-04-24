@@ -2,6 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
+import { RsOrb } from "@/components/icons/ResonanceIcons";
 
 export default function RelativeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -127,98 +128,101 @@ export default function RelativeDetailPage({ params }: { params: Promise<{ id: s
   const scenarios = getDynamicScenarios(relative.relationType);
 
   return (
-    <main className="container animate-fade-in" style={{ marginTop: '5vh' }}>
-      <button style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', marginBottom: '1rem', fontSize: '1rem', outline: 'none' }} onClick={() => router.push("/dashboard")}>
+    <main className="animate-fade-in" style={{ padding: '14px 16px 20px', maxWidth: '600px', margin: '0 auto', height: 'calc(100vh - 50px)', overflowY: 'auto' }}>
+      <button 
+        style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }} 
+        onClick={() => router.push("/dashboard")}
+      >
         ← 返回控制台
       </button>
 
-      <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
-        <h1 className="heading-1" style={{ fontSize: '2rem' }}>{relative.name} 的频道</h1>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <span style={{ padding: '4px 12px', background: 'rgba(255,255,255,0.5)', borderRadius: '99px', fontSize: '0.9rem', color: 'var(--text-secondary)', border: '1px solid var(--card-border)' }}>
-            身份: {relative.relationType}
-          </span>
-          <span style={{ padding: '4px 12px', background: 'rgba(139, 92, 246, 0.2)', borderRadius: '99px', fontSize: '0.9rem', color: 'var(--accent-color)', fontWeight: 'bold' }}>
-            MBTI频率: {relative.mbti || "未知"}
-          </span>
+      <div className="rs-card" style={{ padding: 16, display: 'flex', gap: 14, alignItems: 'center', marginBottom: 20 }}>
+        <RsOrb size={52} color="mint" />
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 600, color: 'var(--rs-ink)' }}>{relative.name} 的频道</div>
+          <div style={{ fontSize: 11, color: 'var(--rs-ink-soft)', marginBottom: 8, fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>身份: {relative.relationType}</div>
+          <span className="rs-chip">{relative.mbti || "未知"}</span>
         </div>
       </div>
 
-      <div className="glass-panel" style={{ padding: '2rem' }}>
-        <h2 style={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>场景分析引擎</h2>
-        <p className="text-subtitle" style={{ marginBottom: '1.5rem' }}>
-          遇到以下沟通障碍？点击获取基于你们性格底色的专属破解方案：
-        </p>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          {scenarios.map(s => (
+      <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 900, marginBottom: 12, color:'var(--rs-ink-soft)', letterSpacing:1 }}>选择一个困境场景</div>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
+        {scenarios.map((s, i) => {
+          const colors = ['#F27A5A', '#4A7AC9', '#6ECFB0', '#F2C14E'];
+          const isLight = i % 4 === 3;
+          return (
             <button 
               key={s.value} 
-              className="glass-button" 
-              style={{ background: 'rgba(255,255,255,0.4)', color: 'var(--text-primary)', border: '1px solid var(--card-border)', fontSize: '0.95rem' }}
+              style={{
+                fontFamily:'"Nunito",sans-serif', fontSize: 12, fontWeight: 800, textAlign: 'left',
+                padding: '12px 14px', borderRadius: 12,
+                border: '2px solid var(--rs-ink)', background: colors[i % 4], color: isLight ? 'var(--rs-ink)' : '#fff',
+                boxShadow: '0 3px 0 0 var(--rs-ink)', cursor: 'pointer', lineHeight: 1.35,
+                transition: 'transform 0.1s, box-shadow 0.1s'
+              }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 1px 0 0 var(--rs-ink)'; }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
               onClick={() => askForAdvice(s.label)}
             >
               {s.label}
             </button>
-          ))}
-        </div>
-
-        <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem' }}>
-          <input 
-            type="text" 
-            placeholder="或者输入你目前遇到的具体沟通困境..." 
-            value={customScenario}
-            onChange={(e) => setCustomScenario(e.target.value)}
-            onKeyDown={(e) => {
-              if(e.key === 'Enter' && customScenario.trim() !== '') {
-                 askForAdvice(customScenario);
-              }
-            }}
-            style={{ 
-              flex: 1, 
-              padding: '12px 16px', 
-              borderRadius: '12px', 
-              border: '1px solid var(--accent-color)', 
-              background: 'rgba(255,255,255,0.6)', 
-              fontSize: '1rem', 
-              outline: 'none',
-              fontFamily: 'inherit'
-            }}
-          />
-          <button 
-            className="glass-button"
-            style={{ padding: '0 1.5rem' }}
-            onClick={() => {
-              if (customScenario.trim() !== '') {
-                 askForAdvice(customScenario);
-              }
-            }}
-          >
-            发送
-          </button>
-        </div>
-        
-        {adviceRequested && (
-          <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--card-border)' }}>
-            <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>
-              正在解析: <span style={{ color: 'var(--accent-color)' }}>{adviceRequested}</span>
-            </h3>
-            
-            {loadingAdvice ? (
-              <div className="loader"></div>
-            ) : (
-              <div className="animate-fade-in" style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.6)', borderRadius: '12px', lineHeight: '1.6', color: 'var(--text-primary)' }}>
-                {adviceResponse?.split('\n').map((line, i) => <p key={i} style={{marginBottom:'0.5rem'}}>{line}</p>)}
-                
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '1.5rem' }}>
-                  <button style={{ background:'none', border:'none', cursor:'pointer', fontSize:'1.2rem', padding:'4px' }}>👍</button>
-                  <button style={{ background:'none', border:'none', cursor:'pointer', fontSize:'1.2rem', padding:'4px' }}>👎</button>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+          )
+        })}
       </div>
+
+      <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+        <input 
+          type="text" 
+          placeholder="输入你的具体困境..." 
+          value={customScenario}
+          onChange={(e) => setCustomScenario(e.target.value)}
+          onKeyDown={(e) => {
+            if(e.key === 'Enter' && customScenario.trim() !== '') askForAdvice(customScenario);
+          }}
+          style={{ 
+            flex: 1, padding: '10px 14px', fontSize: 13,
+            border: '2px solid var(--rs-ink)', borderRadius: 10, fontFamily: '"Nunito",sans-serif', outline: 'none', background:'#fff', color: 'var(--rs-ink)'
+          }}
+        />
+        <button 
+          className="rs-btn honey" 
+          style={{ padding: '8px 18px', fontSize:13 }}
+          onClick={() => {
+            if (customScenario.trim() !== '') askForAdvice(customScenario);
+          }}
+        >
+          发送
+        </button>
+      </div>
+      
+      {adviceRequested && (
+        <div style={{ marginTop: '1rem', animation: 'fadeIn 0.4s ease-out' }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--rs-ink-soft)', marginBottom: 8, fontFamily:'"Nunito",sans-serif' }}>
+            正在解析: <span style={{ color: 'var(--rs-coral-dk)' }}>{adviceRequested}</span>
+          </div>
+          
+          {loadingAdvice ? (
+            <div style={{ padding: 20, textAlign: 'center' }}>
+              <RsOrb size={40} color="lilac" />
+              <div style={{ marginTop: 8, fontSize: 11, color: 'var(--rs-ink-soft)', fontFamily:'"Nunito",sans-serif', fontWeight: 700 }}>AI 引波中...</div>
+            </div>
+          ) : (
+            <div className="rs-card" style={{ padding: 18, background: '#FFF1D9', border: '2.5px dashed var(--rs-ink)', boxShadow:'0 3px 0 0 var(--rs-ink)' }}>
+              <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--rs-coral-dk)', marginBottom: 8, letterSpacing:2, fontFamily:'"Nunito",sans-serif' }}>✦ 今日灵感</div>
+              <div style={{ fontFamily:'"Nunito",sans-serif', fontSize: 13, lineHeight: 1.6, color: 'var(--rs-ink)' }}>
+                {adviceResponse?.split('\n').map((line, i) => <p key={i} style={{marginBottom:'0.5rem'}}>{line}</p>)}
+              </div>
+              
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '1rem' }}>
+                <button style={{ background:'none', border:'none', cursor:'pointer', fontSize:'1.2rem', padding:'4px', opacity: 0.7 }}>👍</button>
+                <button style={{ background:'none', border:'none', cursor:'pointer', fontSize:'1.2rem', padding:'4px', opacity: 0.7 }}>👎</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </main>
   );
 }

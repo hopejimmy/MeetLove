@@ -69,50 +69,75 @@ export default function AddRelativePage() {
 
   if(step === "info") {
     return (
-      <main className="container animate-fade-in" style={{ marginTop: '5vh' }}>
-        <div className="glass-panel" style={{ padding: '2rem' }}>
-          <h1 className="heading-1" style={{ fontSize: '1.8rem' }}>新增一个共振频段</h1>
-          <p className="text-subtitle">输入你想了解的那个人的基本信息，以便我们可以建立对应的专属档案。</p>
+      <main className="animate-fade-in" style={{ padding: '14px 18px', maxWidth: '500px', margin: '0 auto' }}>
+        <button 
+          onClick={() => router.push("/dashboard")}
+          style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }}
+        >
+          ← 返回
+        </button>
+        <div className="rs-card" style={{ padding: 22 }}>
+          <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>新的连接</h2>
+          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 20px', fontFamily:'"Nunito",sans-serif' }}>为 TA 建立一份共振档案</p>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
-            <label style={{ fontWeight: 600, color: 'var(--text-primary)' }}>对方怎么称呼？</label>
-            <input 
-              style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.5)', fontSize: '1rem', outline: 'none' }}
-              placeholder="例如: 妈妈，老婆，老板..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 6, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink)' }}>怎么称呼 TA？</div>
+          <input 
+            placeholder="例如: 妈妈，老公，老板..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={{
+              width: '100%', boxSizing: 'border-box', padding: '12px 14px', fontSize: 14,
+              border: '2px solid var(--rs-ink)', borderRadius: 12, marginBottom: 16, fontFamily: '"Nunito",sans-serif', outline: 'none', background:'#fff', color:'var(--rs-ink)'
+            }}
+          />
 
-            <label style={{ fontWeight: 600, color: 'var(--text-primary)', marginTop: '1rem' }}>你们是什么关系？</label>
-            <select 
-              style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.5)', fontSize: '1rem', outline: 'none' }}
-              value={relationType}
-              onChange={(e) => setRelationType(e.target.value)}
-            >
-              <option value="Partner">伴侣 / 恋人</option>
-              <option value="Parent">父母</option>
-              <option value="Child">孩子</option>
-              <option value="Friend">朋友 / 闺蜜</option>
-              <option value="Colleague">同事 / 老板</option>
-            </select>
-
-            <button 
-              className="glass-button" 
-              style={{ marginTop: '2rem' }}
-              onClick={() => {
-                if(!name) return alert("请输入名字");
-                setStep("method");
-              }}
-            >
-              下一步
-            </button>
-            <button 
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', marginTop: '1rem' }}
-              onClick={() => router.push("/dashboard")}
-            >
-              取消
-            </button>
+          <div style={{ fontSize: 12, fontWeight: 800, marginBottom: 8, fontFamily:'"Nunito",sans-serif', color:'var(--rs-ink)' }}>你们是什么关系？</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
+            {[
+              { val: 'Partner', label: '伴侣' },
+              { val: 'Parent', label: '父母' },
+              { val: 'Child', label: '孩子' },
+              { val: 'Friend', label: '朋友' },
+              { val: 'Colleague', label: '同事' },
+              { val: 'Other', label: '其他' }
+            ].map((r,i) => {
+              const active = relationType === r.val;
+              return (
+                <button 
+                  key={r.val}
+                  onClick={() => setRelationType(r.val)}
+                  style={{
+                    fontFamily:'"Nunito",sans-serif', fontSize: 13, fontWeight: 800,
+                    padding: '10px 0', borderRadius: 10,
+                    border: '2px solid var(--rs-ink)',
+                    background: active ? 'var(--rs-coral)' : 'var(--rs-cream)',
+                    color: active ? '#fff' : 'var(--rs-ink)',
+                    boxShadow: '0 3px 0 0 var(--rs-ink)', cursor: 'pointer',
+                    transition: 'transform 0.1s, box-shadow 0.1s',
+                    transform: active ? 'translateY(2px)' : 'translateY(0)',
+                  }}
+                >{r.label}</button>
+              );
+            })}
           </div>
+
+          <button 
+            className="rs-btn" 
+            style={{ width: '100%', marginBottom: 12, padding: '14px 0', fontSize: 15 }}
+            onClick={() => {
+              if(!name) return alert("请输入名字");
+              setStep("method");
+            }}
+          >
+            下一步 →
+          </button>
+          <button 
+            className="rs-btn ghost" 
+            style={{ width: '100%', padding: '14px 0', fontSize: 15 }}
+            onClick={() => router.push("/dashboard")}
+          >
+            取消
+          </button>
         </div>
       </main>
     );
@@ -120,32 +145,29 @@ export default function AddRelativePage() {
 
   if(step === "method") {
     return (
-      <main className="container animate-fade-in" style={{ marginTop: '5vh' }}>
-        <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.4rem', marginBottom: '1rem' }}>你知道 TA 的 MBTI 吗？</h2>
-          <p className="text-subtitle">如果你不清楚，我们可以通过 4 个小问题进行**行为特征侧写**来估测。</p>
+      <main className="animate-fade-in" style={{ padding: '14px 18px', maxWidth: '500px', margin: '0 auto' }}>
+        <button onClick={() => setStep("info")} style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }}>← 返回</button>
+        <div className="rs-card" style={{ padding: 22, textAlign: 'center' }}>
+          <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>你知道 TA 的 MBTI 吗？</h2>
+          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', margin: '0 0 24px', fontFamily:'"Nunito",sans-serif' }}>如果不清楚，我们可以通过 4 个小问题侧写估测。</p>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
-            <button className="glass-button" onClick={() => setStep("quiz")}>
-              我不知道，帮我推演一下 (行为侧写)
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <button 
+              className="rs-btn honey" 
+              onClick={() => setStep("quiz")}
+              style={{ padding: '14px 0', fontSize: 15 }}
+            >
+              我不知道，帮我推测
             </button>
             <button 
-              className="glass-button" 
-              style={{ background: 'var(--card-bg)', color: 'var(--text-primary)', border: '1px solid var(--card-border)' }}
+              className="rs-btn ghost" 
               onClick={() => {
                 const manual = prompt("请输入 TA 的 4 字母 MBTI (例如: ENFP):");
-                if(manual && manual.length === 4) {
-                  SUBMIT_API(manual.toUpperCase());
-                }
+                if(manual && manual.length === 4) SUBMIT_API(manual.toUpperCase());
               }}
+              style={{ padding: '14px 0', fontSize: 15 }}
             >
-              我直接输入
-            </button>
-            <button 
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', marginTop: '1rem' }}
-              onClick={() => setStep("info")}
-            >
-              返回修改信息
+              我知道，直接输入
             </button>
           </div>
         </div>
@@ -156,29 +178,43 @@ export default function AddRelativePage() {
   if(step === "quiz") {
     const q = PROFILING_QUESTIONS[quizIndex];
     return (
-      <main className="container animate-fade-in" style={{ marginTop: '5vh' }}>
-        <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
-          <div style={{ color: 'var(--accent-color)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '2rem' }}>
-            行为侧写推演: {quizIndex + 1} / 4
-          </div>
-          <h2 style={{ fontSize: '1.4rem', marginBottom: '3rem', minHeight: '60px' }}>{q.text}</h2>
+      <main className="animate-fade-in" style={{ padding: '16px 18px', maxWidth: 500, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <button onClick={() => {
+            if(quizIndex === 0) setStep("method");
+            else { setQuizIndex(prev => prev - 1); setAnswers(prev => prev.slice(0, -1)); }
+          }} style={{ background: 'none', border:'none', fontSize:12, fontWeight: 800, color:'var(--rs-ink)', cursor:'pointer', fontFamily:'"Nunito",sans-serif', padding:0 }}>←</button>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <button 
-              className="glass-button" 
-              style={{ background: 'var(--card-bg)', color: 'var(--text-primary)', border: '1px solid var(--accent-color)', textAlign: 'left', padding: '1.5rem 1rem' }}
-              onClick={() => handleQuizAnswer(q.optA.val)}
-            >
-              {q.optA.label}
-            </button>
-            <button 
-               className="glass-button" 
-               style={{ background: 'var(--card-bg)', color: 'var(--text-primary)', border: '1px solid var(--accent-color)', textAlign: 'left', padding: '1.5rem 1rem' }}
-               onClick={() => handleQuizAnswer(q.optB.val)}
-            >
-              {q.optB.label}
-            </button>
+          <span style={{ fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 12, color: 'var(--rs-ink)' }}>推演进度 {quizIndex + 1} / 4</span>
+          <div style={{ display: 'flex', gap: 4 }}>
+            {[0,1,2,3].map((_, i) => (
+              <div key={i} style={{ width: 24, height: 7, borderRadius: 4, background: i <= quizIndex ? 'var(--rs-honey)' : 'var(--rs-cream)', border:'2px solid var(--rs-ink)' }}/>
+            ))}
           </div>
+        </div>
+
+        <div className="rs-card" style={{ padding: 18, marginBottom: 16 }}>
+          <div style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 19, fontWeight: 500, lineHeight: 1.35 }}>
+            {q.text}
+          </div>
+        </div>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <button className="rs-card" onClick={() => handleQuizAnswer(q.optA.val)} 
+            onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 5px 0 0 var(--rs-ink)'; }}
+            style={{ padding: 14, textAlign: 'left', cursor: 'pointer', fontFamily: '"Nunito",sans-serif', transition:'transform .1s, box-shadow .1s', display: 'flex', gap: 12, alignItems: 'center' }}>
+             <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--rs-honey)', color:'var(--rs-ink)', border: '2.5px solid var(--rs-ink)', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 16, flexShrink: 0 }}>A</div>
+             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{q.optA.label}</div>
+          </button>
+          
+          <button className="rs-card" onClick={() => handleQuizAnswer(q.optB.val)} 
+            onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 5px 0 0 var(--rs-ink)'; }}
+            style={{ padding: 14, textAlign: 'left', cursor: 'pointer', fontFamily: '"Nunito",sans-serif', transition:'transform .1s, box-shadow .1s', display: 'flex', gap: 12, alignItems: 'center' }}>
+             <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--rs-lilac)', color:'#fff', border: '2.5px solid var(--rs-ink)', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 16, flexShrink: 0 }}>B</div>
+             <div style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 700, color: 'var(--rs-ink)' }}>{q.optB.label}</div>
+          </button>
         </div>
       </main>
     )

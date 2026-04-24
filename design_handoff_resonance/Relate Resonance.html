@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Relate — Resonance (去马里奥化)</title>
+<link rel="stylesheet" href="styles/resonance-tokens.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #F5EEDC; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="components/dir-resonance.jsx"></script>
+
+<script type="text/babel">
+function App() {
+  const W = 320, H = 580;
+  return (
+    <DesignCanvas>
+      <DCSection id="rs" title="Resonance · B方向去马里奥化" subtitle="保留：黑描边 + 硬阴影 + 圆润卡片 + 糖果色 + Odyssey玩具感 · 剔除：红黄蓝三原色 + polka dot + mushroom/coin/star 直接 IP 元素 · 新加：Fraunces 衬线斜体 + 抽象共振气泡 + 珊瑚/蜂蜜/薄荷/丁香色板">
+        <DCArtboard id="rs-hero" label="Hero" width={W} height={H}><RsHero /></DCArtboard>
+        <DCArtboard id="rs-quiz" label="Quiz 测试" width={W} height={H}><RsQuiz /></DCArtboard>
+        <DCArtboard id="rs-select" label="MBTI 选择" width={W} height={H}><RsSelect /></DCArtboard>
+        <DCArtboard id="rs-login" label="Login" width={W} height={H}><RsLogin /></DCArtboard>
+        <DCArtboard id="rs-dash" label="Dashboard" width={W} height={H}><RsDashboard /></DCArtboard>
+        <DCArtboard id="rs-add" label="添加亲友" width={W} height={H}><RsAddRelative /></DCArtboard>
+        <DCArtboard id="rs-detail" label="亲友详情" width={W} height={H}><RsDetail /></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

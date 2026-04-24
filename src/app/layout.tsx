@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import { Fraunces, Nunito } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "@/components/ClientProviders";
 import Navbar from "@/components/Navbar";
+
+const fraunces = Fraunces({ subsets: ["latin"], style: ["normal", "italic"] });
+const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Relate 共振 - Understand & Connect",
@@ -15,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={`${nunito.className} rs-bg`}>
         <ClientProviders>
           <Navbar />
           {children}
