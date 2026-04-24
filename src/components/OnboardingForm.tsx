@@ -26,6 +26,7 @@ export default function OnboardingForm() {
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   const saveMbtiAndRedirect = async (mbti: string) => {
     try {
@@ -80,6 +81,41 @@ export default function OnboardingForm() {
       saveMbtiAndRedirect(resultMbti);
     }
   };
+
+  const SCENARIOS = [
+    {
+      tag: '💔 吵架冷战',
+      title: '冷战3天，不知道怎么开口',
+      sub: '想缓和气氛，但怕一开口又吵起来',
+      userMbti: 'INFJ', userColor: 'var(--rs-coral)',
+      contactLabel: '伴侣', contactMbti: 'ESTP', contactColor: 'var(--rs-cobalt)',
+      advice: '「我知道你现在可能还需要空间。我不是来继续争的——只是想让你知道，我在乎我们，也在乎你的感受。等你准备好，我想好好聊聊。」',
+    },
+    {
+      tag: '👨‍👩‍👧 孩子教育',
+      title: '孩子不肯尝试新东西，一说就叛逆',
+      sub: '想让孩子放下手机、尝试新活动，说什么都没用',
+      userMbti: 'ESTJ', userColor: 'var(--rs-mint)',
+      contactLabel: '孩子', contactMbti: 'INFP', contactColor: 'var(--rs-lilac)',
+      advice: '「我不是要强迫你，我只是有点担心你最近的状态。你愿意跟我说说，现在什么事让你最有意思吗？」',
+    },
+    {
+      tag: '🌪️ 父母控制',
+      title: '父母说"为你好"，句句是控制',
+      sub: '爱他们，但每次通话后都精神内耗半天',
+      userMbti: 'INFP', userColor: 'var(--rs-lilac)',
+      contactLabel: '父母', contactMbti: 'ESTJ', contactColor: 'var(--rs-honey)',
+      advice: '「妈，我知道你说这些是因为在乎我。但这件事我需要按自己的节奏来决定，这样我才能对结果负责。我会认真考虑你的意见的。」',
+    },
+    {
+      tag: '💼 职场压力',
+      title: '老板说"你好好想想"，彻夜未眠',
+      sub: '不知道他什么意思，不知道自己哪里出了问题',
+      userMbti: 'INFJ', userColor: 'var(--rs-coral)',
+      contactLabel: '上司', contactMbti: 'ENTJ', contactColor: 'var(--rs-cobalt)',
+      advice: '「您好，关于昨天的反馈，我想确认一下我的理解是否正确。您希望我在哪个方向上做调整？这样我能更有针对性地改进。」',
+    },
+  ];
 
   // 1. Hero State
   if (step === "hero") {
@@ -161,6 +197,116 @@ export default function OnboardingForm() {
                 “上司随意的一句话，让我彻夜未眠怀疑人生，不知道接下来怎么做。”
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* AI SCENARIO CAROUSEL Section */}
+        <div style={{ marginBottom: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+            <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--rs-ink)', margin: 0 }}>真实场景，实时生成</h2>
+            <div style={{ height: 2, background: 'var(--rs-ink)', width: 30 }}></div>
+          </div>
+
+          {/* Slide */}
+          {(() => {
+            const s = SCENARIOS[carouselIndex];
+            return (
+              <div className="rs-card" style={{ padding: '16px 14px', overflow: 'hidden' }}>
+                {/* Header */}
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{
+                    display: 'inline-block', fontSize: 10, fontWeight: 900,
+                    color: 'var(--rs-coral-dk)', background: 'var(--rs-cream)',
+                    border: '1.5px solid var(--rs-ink)', borderRadius: 20,
+                    padding: '3px 10px', marginBottom: 8,
+                  }}>
+                    {s.tag} &nbsp;{carouselIndex + 1} / {SCENARIOS.length}
+                  </div>
+                  <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--rs-ink)', marginBottom: 4 }}>{s.title}</div>
+                  <div style={{ fontSize: 12, color: 'var(--rs-ink-soft)' }}>{s.sub}</div>
+                </div>
+
+                {/* Personas */}
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  background: 'var(--rs-cream)', borderRadius: 10,
+                  padding: '10px 12px', marginBottom: 12,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <div style={{ width: 26, height: 26, borderRadius: '50%', background: s.userColor, border: '2px solid var(--rs-ink)', flexShrink: 0 }} />
+                    <div style={{ fontSize: 11 }}>
+                      <div style={{ color: 'var(--rs-ink-soft)', fontSize: 10 }}>你</div>
+                      <div style={{ fontWeight: 900 }}>{s.userMbti}</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--rs-ink-soft)', padding: '0 4px' }}>×</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <div style={{ width: 26, height: 26, borderRadius: '50%', background: s.contactColor, border: '2px solid var(--rs-ink)', flexShrink: 0 }} />
+                    <div style={{ fontSize: 11 }}>
+                      <div style={{ color: 'var(--rs-ink-soft)', fontSize: 10 }}>{s.contactLabel}</div>
+                      <div style={{ fontWeight: 900 }}>{s.contactMbti}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Advice bubble */}
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 10, fontWeight: 900, color: 'var(--rs-coral-dk)', letterSpacing: 1, marginBottom: 6 }}>🤖 AI 破冰建议</div>
+                  <div style={{
+                    background: 'var(--rs-cream)', borderLeft: '3px solid var(--rs-mint)',
+                    borderRadius: '0 10px 10px 10px', padding: '10px 12px',
+                    fontSize: 13, lineHeight: 1.65, color: 'var(--rs-ink)', fontStyle: 'italic', fontWeight: 600,
+                  }}>
+                    {s.advice}
+                  </div>
+                  <div style={{ fontSize: 10, color: 'var(--rs-ink-soft)', textAlign: 'right', marginTop: 6 }}>
+                    基于 {s.userMbti} × {s.contactMbti} 模型生成 ✦
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Navigation */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, padding: '0 4px' }}>
+            <button
+              onClick={() => setCarouselIndex(i => Math.max(0, i - 1))}
+              disabled={carouselIndex === 0}
+              style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: '#fff', border: '2px solid var(--rs-ink)',
+                boxShadow: '0 3px 0 0 var(--rs-ink)',
+                fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                opacity: carouselIndex === 0 ? 0.3 : 1,
+              }}
+            >←</button>
+
+            <div style={{ display: 'flex', gap: 6 }}>
+              {SCENARIOS.map((_, i) => (
+                <div
+                  key={i}
+                  onClick={() => setCarouselIndex(i)}
+                  style={{
+                    width: 8, height: 8, borderRadius: '50%', cursor: 'pointer',
+                    background: i === carouselIndex ? 'var(--rs-coral)' : 'var(--rs-cream)',
+                    border: '1.5px solid var(--rs-ink)',
+                  }}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => setCarouselIndex(i => Math.min(SCENARIOS.length - 1, i + 1))}
+              disabled={carouselIndex === SCENARIOS.length - 1}
+              style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: '#fff', border: '2px solid var(--rs-ink)',
+                boxShadow: '0 3px 0 0 var(--rs-ink)',
+                fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                opacity: carouselIndex === SCENARIOS.length - 1 ? 0.3 : 1,
+              }}
+            >→</button>
           </div>
         </div>
 
