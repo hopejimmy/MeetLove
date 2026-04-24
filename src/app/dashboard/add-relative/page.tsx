@@ -3,11 +3,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// Reuse styles from Onboarding mostly via global or local inline for simplicity in MVP
+const MBTI_TYPES = [
+  "INTJ", "INTP", "ENTJ", "ENTP",
+  "INFJ", "INFP", "ENFJ", "ENFP",
+  "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+  "ISTP", "ISFP", "ESTP", "ESFP"
+];
+
 export default function AddRelativePage() {
   const router = useRouter();
   
-  const [step, setStep] = useState<"info" | "method" | "quiz" | "submitting">("info");
+  const [step, setStep] = useState<"info" | "method" | "select" | "quiz" | "submitting">("info");
   
   const [name, setName] = useState("");
   const [relationType, setRelationType] = useState("Partner");
@@ -161,15 +167,49 @@ export default function AddRelativePage() {
             </button>
             <button 
               className="rs-btn ghost" 
-              onClick={() => {
-                const manual = prompt("请输入 TA 的 4 字母 MBTI (例如: ENFP):");
-                if(manual && manual.length === 4) SUBMIT_API(manual.toUpperCase());
-              }}
+              onClick={() => setStep("select")}
               style={{ padding: '14px 0', fontSize: 15 }}
             >
-              我知道，直接输入
+              我知道，直接选择
             </button>
           </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (step === "select") {
+    const colors = ['var(--rs-coral)', 'var(--rs-mint)', 'var(--rs-cobalt)', 'var(--rs-honey)', 'var(--rs-lilac)'];
+    
+    return (
+      <main className="animate-fade-in" style={{ padding: '14px 18px', maxWidth: 500, margin: '0 auto' }}>
+        <button onClick={() => setStep("method")} style={{ background: 'none', border: 'none', fontSize: 13, fontWeight: 800, color: 'var(--rs-ink)', cursor: 'pointer', marginBottom: 12, padding: 0, fontFamily:'"Nunito",sans-serif' }}>← 返回</button>
+        
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <h2 style={{ fontFamily:'"Fraunces",serif', fontStyle:'italic', fontSize: 22, fontWeight: 600, margin: '0 0 4px', color:'var(--rs-ink)' }}>选择TA的频率</h2>
+          <p style={{ fontSize: 12, color: 'var(--rs-ink-soft)', margin: 0, fontFamily:'"Nunito",sans-serif' }}>点击下方的十六型人格卡片，直接开启档案</p>
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+          {MBTI_TYPES.map((type, i) => (
+            <button 
+              key={type} 
+              onClick={() => SUBMIT_API(type)}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 1px 0 0 var(--rs-ink)'; }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 3px 0 0 var(--rs-ink)'; }}
+              style={{
+                fontFamily:'"Nunito",sans-serif', fontWeight: 900, fontSize: 12,
+                padding: '12px 0', color: i%5===3 ? 'var(--rs-ink)' : '#fff',
+                background: colors[i % colors.length],
+                border: '2px solid var(--rs-ink)', borderRadius: 10,
+                boxShadow: '0 3px 0 0 var(--rs-ink)', cursor: 'pointer',
+                transition: 'transform .1s, box-shadow .1s'
+              }}
+            >
+              {type}
+            </button>
+          ))}
         </div>
       </main>
     );
