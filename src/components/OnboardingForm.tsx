@@ -93,14 +93,42 @@ export default function OnboardingForm() {
         </div>
 
         {/* HOOK Section */}
-        <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 36 }}>
+        <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 20 }}>
           <div style={{ fontSize: 10, fontWeight: 900, color: 'var(--rs-coral-dk)', letterSpacing: 2, marginBottom: 10 }}>· RELATE 同频 ·</div>
           <h1 style={{ fontFamily:'"Fraunces",serif', fontSize: 26, fontWeight: 700, margin: '0 0 14px', lineHeight: 1.35, color: 'var(--rs-ink)' }}>
             为什么最亲密的人，<br/>总是产生最深的<u style={{textDecorationColor: 'var(--rs-coral)', textUnderlineOffset: 4}}>精神内耗？</u>
           </h1>
-          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, fontFamily:'"Nunito",sans-serif' }}>
-            其实，你们并没有错。<br/>只是你们的「灵魂波段」完全不同。<br/>Relate，带你破解潜意识的情感密码。
+          <p style={{ fontSize: 13, color: 'var(--rs-ink-soft)', lineHeight: 1.6, fontFamily:'"Nunito",sans-serif', marginBottom: 16 }}>
+            其实，你们并没有错。<br/>只是你们的沟通方式天生不同。<br/>Relate 分析双方性格，告诉你<strong>用什么方式说、说什么话</strong>，TA 才听得进去。
           </p>
+
+          {/* Social proof bar */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            background: 'var(--rs-cream)', border: '1.5px solid var(--rs-ink)',
+            borderRadius: 30, padding: '6px 16px', marginBottom: 18,
+            fontSize: 12, fontWeight: 900, color: 'var(--rs-ink)',
+          }}>
+            <span><span style={{ color: 'var(--rs-coral-dk)' }}>2,800+</span> 人已找到频率</span>
+            <span style={{ color: 'var(--rs-ink-soft)' }}>·</span>
+            <span>⭐ <span style={{ color: 'var(--rs-coral-dk)' }}>4.9</span> 分</span>
+          </div>
+
+          {/* Hero CTA buttons */}
+          <button
+            className="rs-btn coral"
+            style={{ width: '100%', marginBottom: 10, padding: '14px 0', fontSize: 15 }}
+            onClick={() => setStep("length_select")}
+          >
+            免费开始测试 →
+          </button>
+          <button
+            className="rs-btn ghost"
+            style={{ width: '100%', fontSize: 13, padding: '10px 0' }}
+            onClick={() => setStep("select")}
+          >
+            我已知道我的 MBTI 型
+          </button>
         </div>
 
         {/* PAIN POINTS Section */}
