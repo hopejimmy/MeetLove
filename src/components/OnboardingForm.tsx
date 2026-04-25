@@ -130,7 +130,7 @@ export default function OnboardingForm() {
           aria-label="不了解 MBTI？点这里了解"
           style={{
             position: 'absolute',
-            top: 8,
+            top: 86,
             right: -4,
             textDecoration: 'none',
             animation: 'bob 2.8s ease-in-out infinite',
