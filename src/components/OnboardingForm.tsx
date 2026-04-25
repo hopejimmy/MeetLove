@@ -124,61 +124,61 @@ export default function OnboardingForm() {
     return (
       <div style={{ padding: '10px 16px 60px', position: 'relative', zIndex: 2, maxWidth: 500, margin: '0 auto' }}>
         
-        {/* Comic speech bubble — points left toward hero headline */}
+        {/* Comic cloud speech bubble (SVG) */}
         <Link
           href="/mbti"
           aria-label="不了解 MBTI？点这里了解"
           style={{
             position: 'absolute',
-            top: 22,
-            right: 0,
+            top: 8,
+            right: -4,
             textDecoration: 'none',
             animation: 'bob 2.8s ease-in-out infinite',
             zIndex: 10,
+            display: 'block',
           }}
         >
-          <div style={{ position: 'relative', display: 'inline-block' }}>
-            {/* Bubble body */}
+          <div style={{ position: 'relative', width: 100, height: 82 }}>
+            <svg viewBox="0 0 125 100" width="100" height="82" style={{ display: 'block' }}>
+              {/* White offset shadow */}
+              <path
+                transform="translate(5,5)"
+                d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,70 Q56,76 66,70 L72,86 L95,68 Z"
+                fill="white"
+                stroke="#2A1F1A"
+                strokeWidth="3.5"
+                strokeLinejoin="round"
+              />
+              {/* Main cloud bubble */}
+              <path
+                d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,70 Q56,76 66,70 L72,86 L95,68 Z"
+                fill="var(--rs-honey)"
+                stroke="#2A1F1A"
+                strokeWidth="3.5"
+                strokeLinejoin="round"
+              />
+            </svg>
             <div style={{
-              background: 'var(--rs-honey)',
-              border: '2.5px solid var(--rs-ink)',
-              borderRadius: '18px 16px 16px 14px',
-              boxShadow: '3px 3px 0 0 var(--rs-ink)',
-              padding: '9px 11px',
-              maxWidth: 76,
-              textAlign: 'center',
-              fontSize: 11,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 5,
+              bottom: 16,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 10,
               fontWeight: 900,
-              color: 'var(--rs-ink)',
+              color: '#2A1F1A',
               fontFamily: '"Nunito", sans-serif',
               lineHeight: 1.4,
-              transform: 'rotate(-2deg)',
+              textAlign: 'center',
+              pointerEvents: 'none',
             }}>
-              <div style={{ fontSize: 17, marginBottom: 3 }}>💡</div>
+              <div style={{ fontSize: 15, marginBottom: 2 }}>💡</div>
               <div>不了解<br />MBTI？<br />点这里</div>
             </div>
-            {/* Tail outer (border color) — points left */}
-            <div style={{
-              position: 'absolute',
-              top: 22,
-              left: -13,
-              width: 0,
-              height: 0,
-              borderTop: '8px solid transparent',
-              borderBottom: '8px solid transparent',
-              borderRight: '13px solid var(--rs-ink)',
-            }} />
-            {/* Tail inner (fill color) */}
-            <div style={{
-              position: 'absolute',
-              top: 24,
-              left: -9,
-              width: 0,
-              height: 0,
-              borderTop: '6px solid transparent',
-              borderBottom: '6px solid transparent',
-              borderRight: '10px solid var(--rs-honey)',
-            }} />
           </div>
         </Link>
 
