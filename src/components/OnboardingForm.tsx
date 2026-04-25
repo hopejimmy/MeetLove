@@ -138,11 +138,11 @@ export default function OnboardingForm() {
             display: 'block',
           }}
         >
-          <div style={{ position: 'relative', width: 140, height: 116 }}>
-            <svg viewBox="0 0 125 100" width="140" height="116" style={{ display: 'block' }}>
-              {/* Main cloud bubble */}
+          <div style={{ position: 'relative', width: 140, height: 100 }}>
+            <svg viewBox="0 0 125 88" width="140" height="100" style={{ display: 'block' }}>
+              {/* Main cloud bubble — no tail, all curly edges */}
               <path
-                d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,70 Q56,76 66,70 L72,86 L95,68 Z"
+                d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,72 Q56,78 80,74 Q88,72 95,68 Z"
                 fill="var(--rs-honey)"
                 stroke="#2A1F1A"
                 strokeWidth="3"
@@ -153,8 +153,8 @@ export default function OnboardingForm() {
               position: 'absolute',
               top: 14,
               left: 14,
-              right: 20,
-              bottom: 34,
+              right: 16,
+              bottom: 16,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
