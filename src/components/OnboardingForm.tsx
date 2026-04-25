@@ -138,15 +138,15 @@ export default function OnboardingForm() {
             display: 'block',
           }}
         >
-          <div style={{ position: 'relative', width: 100, height: 82 }}>
-            <svg viewBox="0 0 125 100" width="100" height="82" style={{ display: 'block' }}>
+          <div style={{ position: 'relative', width: 140, height: 116 }}>
+            <svg viewBox="0 0 125 100" width="140" height="116" style={{ display: 'block' }}>
               {/* White offset shadow */}
               <path
                 transform="translate(5,5)"
                 d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,70 Q56,76 66,70 L72,86 L95,68 Z"
                 fill="white"
                 stroke="#2A1F1A"
-                strokeWidth="3.5"
+                strokeWidth="3"
                 strokeLinejoin="round"
               />
               {/* Main cloud bubble */}
@@ -154,30 +154,28 @@ export default function OnboardingForm() {
                 d="M95,68 Q106,68 112,58 Q120,48 112,38 Q112,22 96,18 Q94,8 80,10 Q72,2 60,10 Q52,2 44,10 Q32,4 26,16 Q14,16 12,28 Q4,36 8,48 Q6,62 18,68 Q28,78 46,70 Q56,76 66,70 L72,86 L95,68 Z"
                 fill="var(--rs-honey)"
                 stroke="#2A1F1A"
-                strokeWidth="3.5"
+                strokeWidth="3"
                 strokeLinejoin="round"
               />
             </svg>
             <div style={{
               position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 5,
-              bottom: 16,
+              top: 14,
+              left: 14,
+              right: 20,
+              bottom: 34,
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: 10,
+              fontSize: 12,
               fontWeight: 900,
               color: '#2A1F1A',
               fontFamily: '"Nunito", sans-serif',
-              lineHeight: 1.4,
+              lineHeight: 1.5,
               textAlign: 'center',
               pointerEvents: 'none',
             }}>
-              <div style={{ fontSize: 15, marginBottom: 2 }}>💡</div>
-              <div>不了解<br />MBTI？<br />点这里</div>
+              不了解 MBTI？<br />点这里了解 →
             </div>
           </div>
         </Link>
